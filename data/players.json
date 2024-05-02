@@ -298,5 +298,23 @@
         "lastname": "Rty",
         "birth": "11-11-2222",
         "national chess ID": "AZ12345"
+    },
+    {
+        "firstname": "Lucie",
+        "lastname": "Zhang",
+        "birth": "27-10-2000",
+        "national chess ID": "AZ12345"
+    },
+    {
+        "firstname": "Alia",
+        "lastname": "Arha",
+        "birth": "01-01-2000",
+        "national chess ID": "QS15977"
+    },
+    {
+        "firstname": "Aaa",
+        "lastname": "Aa",
+        "birth": "11-11-2011",
+        "national chess ID": "AA11111"
     }
 ]

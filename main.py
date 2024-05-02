@@ -1,13 +1,10 @@
-from controller.main_controller import start, cleanup
+from controller.main_controller import MainController
 
 
 def main():
-    try:
-        start()
-    finally:
-        cleanup()
+    main_controller = MainController()
+    main_controller.run()
 
 
 if __name__ == "__main__":
     main()
-

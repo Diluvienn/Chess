@@ -1,5 +1,3 @@
-import keyboard
-
 # Import des classes de repository
 from repository.tournament_repository import TournamentRepository
 from repository.player_repository import PlayerRepository
@@ -12,15 +10,6 @@ from controller.player_controller import PlayerController
 from view.tournament_view import TournamentView
 from view.player_view import PlayerView
 from view.main_view import MainView
-
-
-def start():
-    main_controller = MainController()
-    main_controller.run()
-
-
-def cleanup():
-    keyboard.unhook_all()
 
 
 class MainController:
@@ -54,23 +43,12 @@ class MainController:
                                  _player_repository,
                                  self._player_controller))
 
-        # Enregistrer la fonction de détection de la touche "Échap"
-        keyboard.on_press_key('esc', self.escape_pressed)
-
-    def escape_pressed(self, event):
-        if event.name == 'esc':
-            print("Retour au menu principal.")
-            cleanup()  # Nettoie les écouteurs de clavier
-            # Redémarre le menu principal
-            start()
-
     def run(self):
 
         while True:
-
             self._main_view.display_main_menu()
 
-            choice = input("Entrez le numéro de votre choix: ")
+            choice = self._main_view.get_user_choice()
 
             if choice == "1":
                 self._tournament_controller.show_tournaments()
@@ -92,8 +70,6 @@ class MainController:
             else:
                 print("\033[91mChoix invalide. "
                       "Veuillez entrer un numéro valide.\033[0m")
-
-            cleanup()
 
 
 if __name__ == "__main__":

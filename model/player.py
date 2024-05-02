@@ -1,20 +1,25 @@
 """
 Module for managing player information and storage.
 
-This module defines a Player class representing individual chess players and a PlayerRepository class
-for managing player data storage and retrieval.
+This module defines a Player class representing individual chess players
+and a PlayerRepository class for managing player data storage and retrieval.
 
 Classes:
-    - Player: Represents a chess player with attributes including first name, last name, date of birth,
+    - Player: Represents a chess player with attributes
+    including first name, last name, date of birth,
       and national chess ID.
-    - PlayerRepository: Manages the storage and retrieval of player information.
+    - PlayerRepository: Manages the storage
+    and retrieval of player information.
 """
 
 
 class Player:
     """Player"""
 
-    def __init__(self, firstname: str, lastname: str, birth: str, national_chess_id: str):
+    def __init__(self, firstname: str,
+                 lastname: str,
+                 birth: str,
+                 national_chess_id: str):
         self.firstname = firstname.title()
         self.lastname = lastname.title()
         self.birth = birth
@@ -24,7 +29,8 @@ class Player:
     def __str__(self):
         return (f"Prénom : {self.firstname} "
                 f"nom : {self.lastname} "
-                f"(Date de naissance: {self.birth}, "                
+                f"(Date de naissance:"
+                f" {self.birth}, "
                 f"Identifiant national: {self.national_chess_id})")
 
     def fullname(self):
@@ -44,8 +50,10 @@ class Player:
         """Converts player data to a JSON-compatible dictionary.
 
         Returns:
-            dict: A dictionary containing player information in a JSON-compatible format.
-                  Keys include 'firstname', 'lastname', 'birth', and 'national chess ID'.
+            dict: A dictionary containing player information
+            in a JSON-compatible format.
+                  Keys include 'firstname', 'lastname',
+                  'birth', and 'national chess ID'.
         """
         return {
             'firstname': self.firstname,

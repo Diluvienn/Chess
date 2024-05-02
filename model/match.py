@@ -1,5 +1,6 @@
-"""This module contains the definition of the Match class, which represents a match
-in a chess tournament. It provides methods to initialize a match with players and scores,
+"""This module contains the definition of the Match class,
+which represents a match in a chess tournament.
+It provides methods to initialize a match with players and scores,
 simulate playing the match, and obtain a string representation of the match.
 
 Classes:
@@ -22,14 +23,18 @@ class Match:
         self.result = None
 
     def __str__(self):
-        player1_name = f"{list(self.players.keys())[0].firstname} {list(self.players.keys())[0].lastname}"
-        player2_name = f"{list(self.players.keys())[1].firstname} {list(self.players.keys())[1].lastname}"
-        return (f"\nMatch: {player1_name} vs {player2_name}, Scores: {self.players[list(self.players.keys())[0]]}-"
+        player1_name = (f"{list(self.players.keys())[0].firstname} "
+                        f"{list(self.players.keys())[0].lastname}")
+        player2_name = (f"{list(self.players.keys())[1].firstname} "
+                        f"{list(self.players.keys())[1].lastname}")
+        return (f"\nMatch: {player1_name} vs {player2_name}, "
+                f"Scores: {self.players[list(self.players.keys())[0]]}-"
                 f"{self.players[list(self.players.keys())[1]]}")
 
     def to_json(self):
         # Convertir les clés en chaînes de caractères pour les noms des joueurs
-        players_json = {f"{player.firstname} {player.lastname}": score for player, score in self.players.items()}
+        players_json = {f"{player.firstname} {player.lastname}": score
+                        for player, score in self.players.items()}
 
         # Créer un dictionnaire contenant les données du match
         match_json = {
@@ -59,7 +64,8 @@ class Match:
             if player:
                 players[player] = score
             else:
-                print(f"Joueur introuvable dans la liste des joueurs du tournoi : {player_name}")
+                print(f"Joueur introuvable dans "
+                      f"la liste des joueurs du tournoi : {player_name}")
 
         # Créer l'objet Match avec les joueurs (objets Player) et leurs scores
         match = cls(players)
@@ -70,8 +76,10 @@ class Match:
         player1 = list(self.players.keys())[0]
         player2 = list(self.players.keys())[1]
         # Afficher les détails du match
-        player1_name = f"{list(self.players.keys())[0].firstname} {list(self.players.keys())[0].lastname}"
-        player2_name = f"{list(self.players.keys())[1].firstname} {list(self.players.keys())[1].lastname}"
+        player1_name = (f"{list(self.players.keys())[0].firstname} "
+                        f"{list(self.players.keys())[0].lastname}")
+        player2_name = (f"{list(self.players.keys())[1].firstname} "
+                        f"{list(self.players.keys())[1].lastname}")
         print(f"Match: {player1_name} contre {player2_name}")
 
         # Demander à l'utilisateur de saisir le résultat
@@ -81,7 +89,8 @@ class Match:
                 result = result_input.lower()
                 break
             else:
-                print("\033[91mVeuillez entrer 'win', 'loss' ou 'draw'.\033[0m")
+                print("\033[91mVeuillez entrer "
+                      "'win', 'loss' ou 'draw'.\033[0m")
 
         # Assigner le résultat du match à la variable d'instance self.result
         self.result = result

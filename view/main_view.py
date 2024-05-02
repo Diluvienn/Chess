@@ -10,3 +10,11 @@ class MainView:
         print("6. Ajouter des joueurs à un tournoi non commencé")
         print("7. Reprendre un tournoi non terminé")
         print("8. Quitter")
+
+    @staticmethod
+    def get_user_choice():
+        """
+        Demande à l'utilisateur de saisir
+        son choix et renvoie la valeur saisie.
+        """
+        return input("Entrez le numéro de votre choix: ")

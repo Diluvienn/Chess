@@ -22,12 +22,16 @@ def get_tournament_name_by_index(tournaments, tournament_index):
 
 def calculate_leaderboard(tournament, previous_scores):
     # Créez une liste de tuples (joueur, score total)
-    leaderboard = [(player, player.calculate_total_score(tournament.rounds, previous_scores))
+    leaderboard = [(player,
+                    player.calculate_total_score(tournament.rounds,
+                                                 previous_scores))
                    for player in tournament.players_list]
     # Triez la liste en fonction du score total (en ordre décroissant)
     sorted_leaderboard = sorted(leaderboard, key=lambda x: x[1], reverse=True)
 
-    tournament.players_score = {f"{player.firstname} {player.lastname}": score for player, score in sorted_leaderboard}
+    tournament.players_score = \
+        {f"{player.firstname} {player.lastname}": score
+         for player, score in sorted_leaderboard}
     # Affichez le classement
     # Vérifier si c'est le dernier round
     if tournament.current_round == len(tournament.rounds) - 1:
@@ -68,7 +72,8 @@ class TournamentController:
         self.get_tournament_details(tournament_name)
 
     def create_new_tournament(self):
-        """Crée un nouveau tournoi avec les détails fournis par l'utilisateur."""
+        """Crée un nouveau tournoi avec les détails
+        fournis par l'utilisateur."""
         (name, place, date_start, date_end,
          director_note, rounds) = (
             self.tournament_view.get_new_tournament_details())

@@ -12,7 +12,9 @@ def get_selected_player(sorted_players):
             index = int(index_input)
             if 1 <= index <= len(sorted_players):
                 player_data = sorted_players[index - 1]
-                player_instance = Player(player_data['firstname'], player_data['lastname'], player_data['birth'],
+                player_instance = Player(player_data['firstname'],
+                                         player_data['lastname'],
+                                         player_data['birth'],
                                          player_data['national chess ID'])
                 return player_instance, index
             else:
@@ -29,7 +31,9 @@ class PlayerRepository:
         """Initialize the PlayerRepository.
 
         Args:
-            filename (str, optional): Name of the JSON file to store player data. Defaults to 'players.json'.
+            filename (str, optional):
+            Name of the JSON file to store player data.
+            Defaults to 'players.json'.
         """
         data_dir = os.path.join(os.path.dirname(__file__), '..', 'data')
         self.filename = os.path.join(data_dir, filename)
@@ -38,8 +42,9 @@ class PlayerRepository:
         """Load players from the JSON file.
 
         Returns:
-            List[dict]: A list of dictionaries containing player information loaded from the JSON file.
-                        If the file does not exist, an empty list is returned.
+            List[dict]: A list of dictionaries
+            containing player information loaded from the JSON file.
+            If the file does not exist, an empty list is returned.
         """
         if not os.path.exists(self.filename):
             return []
@@ -52,11 +57,13 @@ class PlayerRepository:
         """Get players from the repository sorted alphabetically by last name.
 
         Returns:
-            List[Dict[str, str]]: A list of dictionaries representing player information sorted alphabetically
-                                   by last name.
+            List[Dict[str, str]]: A list of dictionaries
+            representing player information sorted alphabetically
+            by last name.
 
         Note:
-            This method retrieves player data from the repository, sorts the players alphabetically
+            This method retrieves player data from the repository,
+            sorts the players alphabetically
             by last name, and returns a list of dictionaries.
         """
         players = self.load_players()
@@ -79,7 +86,8 @@ class PlayerRepository:
         sorted_players = self.get_player_by_alphabetical_order()
         print("\nListe des joueurs triés par ordre alphabétique:")
         for i, player_data in enumerate(sorted_players):
-            print(f"{i + 1} - {player_data['lastname']} {player_data['firstname']}")
+            print(f"{i + 1} - {player_data['lastname']} "
+                  f"{player_data['firstname']}")
         return sorted_players
 
 

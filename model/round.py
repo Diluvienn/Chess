@@ -1,6 +1,7 @@
 """
-This module contains the definition of the Round class, which represents a round
-in a chess tournament. It also provides methods to generate matches for the round,
+This module contains the definition of the Round class,
+which represents a round in a chess tournament.
+It also provides methods to generate matches for the round,
 play all matches, and retrieve the list of matches in the round.
 
 Classes:
@@ -37,7 +38,8 @@ class Round:
     def from_json(cls, round_data, tournament):
         name = round_data["name"]
         matches_data = round_data["matches"]
-        matches = [Match.from_json(match_data, tournament) for match_data in matches_data]
+        matches = [Match.from_json(match_data, tournament)
+                   for match_data in matches_data]
         start_time = round_data.get("start_time")
         end_time = round_data.get("end_time")
         round = cls(name, matches, start_time, end_time)
@@ -55,7 +57,8 @@ class Round:
         """Get the list of matches in the round.
 
         Returns:
-            list: A list of Match objects representing the matches in the round.
+            list: A list of Match objects
+            representing the matches in the round.
         """
         return self.matches
 

@@ -9,7 +9,8 @@ class PlayerController:
 
     def show_players(self):
         """Affiche la liste des joueurs."""
-        sorted_players = self.player_repository.get_player_by_alphabetical_order()
+        sorted_players = (
+            self.player_repository.get_player_by_alphabetical_order())
         if not sorted_players:
             print("Aucun joueur enregistré pour le moment.")
         else:
@@ -24,7 +25,8 @@ class PlayerController:
                 if choice == "n":
                     break
                 elif choice == "y":
-                    player_index = input("Veuillez indiquer l'index du joueur : ")
+                    player_index = input("Veuillez "
+                                         "indiquer l'index du joueur : ")
                     try:
                         player_index = int(player_index)
                         if 1 <= player_index <= len(sorted_players):
@@ -39,7 +41,8 @@ class PlayerController:
                             print("\033[91mIndex invalide.\033[0m")
 
                     except ValueError:
-                        print("\033[91mVeuillez entrer un index valide.\033[0m")
+                        print("\033[91mVeuillez "
+                              "entrer un index valide.\033[0m")
 
                 else:
                     print("\033Choix invalide. "

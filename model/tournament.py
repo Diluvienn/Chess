@@ -1,19 +1,23 @@
 """
 Module for managing tournament information and storage.
 
-This module defines a Tournament class representing individual chess tournaments and a TournamentRepository class
+This module defines a Tournament class representing
+individual chess tournaments and a TournamentRepository class
 for managing tournament data storage and retrieval.
 
 Classes:
-    - Tournament: Represents a chess tournament with attributes including name, place, start date, end date,
-      number of rounds, current round, player list, player scores, and director note.
-    - TournamentRepository: Manages the storage and retrieval of tournament information.
+    - Tournament: Represents a chess tournament with
+    attributes including name, place, start date, end date,
+    number of rounds, current round, player list,
+    player scores, and director note.
+    - TournamentRepository: Manages the storage
+    and retrieval of tournament information.
 """
 
 import random
 import itertools
 
-from typing import Dict, List, Optional, Set
+from typing import Dict, List, Set, Optional
 
 from model.round import Round
 from model.match import Match
@@ -23,9 +27,17 @@ from model.player import Player
 class Tournament:
     """A class representing a chess tournament."""
 
-    def __init__(self, name: str, place: str, date_start: str, date_end: str, rounds: int = 4,
-                 director_note: str = "", current_round: int = 0, players_score: Optional[Dict] = None,
-                 played_pairs: Optional[Set] = None, players_list: Optional[List] = None):
+    def __init__(self, name: str,
+                 place: str,
+                 date_start: str,
+                 date_end: str,
+                 rounds: int = 4,
+                 director_note: str = "",
+                 current_round: int = 0,
+                 players_score: Optional[Dict] = None,
+                 played_pairs: Optional[Set] = None,
+                 players_list: Optional[List] = None):
+
         self.name: str = name
         self.place: str = place
         self.date_start: str = date_start
@@ -36,13 +48,6 @@ class Tournament:
         self.players_score: Dict[str, int] = {}
         self.players_list: List[str] = list(self.players_score.keys())
         self.played_pairs = set()
-
-        if players_score is None:
-            players_score = {}
-        if played_pairs is None:
-            played_pairs = set()
-        if players_list is None:
-            players_list = []
 
     def __getitem__(self, key):
         """Get an item from the tournament by key.
@@ -81,16 +86,21 @@ class Tournament:
 
     def __str__(self):
         """Return a string representation of the tournaments."""
-        return (f"Tournament: {self.name}\nLocation: {self.place}\nStart: {self.date_start}\n"
+        return (f"Tournament: {self.name}"
+                f"\nLocation: {self.place}"
+                f"\nStart: {self.date_start}\n"
                 f"End: {self.date_end}\nRounds: {self.rounds}\n"
-                f"Current Round: {self.current_round}\nDirector Note: {self.director_note}")
+                f"Current Round: {self.current_round}"
+                f"\nDirector Note: {self.director_note}")
 
     def to_json(self):
         """Converts tournament data to a JSON-compatible dictionary.
 
         Returns:
-            dict: A dictionary containing tournament information in a JSON-compatible format.
-                  Keys include 'name', 'place', 'date_start', 'date_end', 'rounds', 'current_round',
+            dict: A dictionary containing tournament information
+            in a JSON-compatible format.
+                  Keys include 'name', 'place', 'date_start',
+                  'date_end', 'rounds', 'current_round',
                   'players_list', 'players_score', and 'director_note'.
         """
         return {
@@ -102,7 +112,9 @@ class Tournament:
             'rounds': [round.to_json() for round in self.rounds],
             'current_round': self.current_round,
             'players_score': self.players_score,
-            'played_pairs': [{'player1': pair[0].to_json(), 'player2': pair[1].to_json()} for pair in self.played_pairs]
+            'played_pairs': [{'player1': pair[0].to_json(),
+                              'player2': pair[1].to_json()}
+                             for pair in self.played_pairs]
 
         }
 
@@ -112,7 +124,8 @@ class Tournament:
 
     def generate_pairs_for_round(self):
 
-        # Générer les paires pour le premier round
+        # Générer les paires
+        # pour le premier round
         if self.current_round == 1:
             all_pairs = list(itertools.combinations(self.players_list, 2))
             random.shuffle(all_pairs)
@@ -129,7 +142,7 @@ class Tournament:
                 match_instance = Match({player1: 0, player2: 0})
                 round_matches.append(match_instance)
                 # Jouer le match
-                result = match_instance.play_match()
+                match_instance.play_match()
 
                 # Mettre à jour les paires déjà jouées et les joueurs appariés
                 self.played_pairs.add((player1, player2))
@@ -143,14 +156,17 @@ class Tournament:
 
         else:
             # Classer les joueurs par score
-            sorted_players = sorted(self.players_list, key=lambda x: x.score, reverse=True)
+            sorted_players = sorted(self.players_list,
+                                    key=lambda x: x.score,
+                                    reverse=True)
 
             # Associer les joueurs pour les rounds suivants
             round_matches = []
             while len(sorted_players) >= 2:
                 player1 = sorted_players[0]
 
-                # Vérifier si les deux derniers joueurs peuvent former une paire
+                # Vérifier si les deux derniers joueurs
+                # peuvent former une paire
                 if len(sorted_players) == 2:
                     player2 = sorted_players[1]
                 else:
@@ -158,9 +174,12 @@ class Tournament:
                     # Chercher le joueur avec le score le plus proche
                     min_diff = float('inf')
                     for j in range(1, len(sorted_players)):
-                        if (player1, sorted_players[j]) not in self.played_pairs and \
-                                (sorted_players[j], player1) not in self.played_pairs:
-                            score_diff = abs(player1.score - sorted_players[j].score)
+                        if ((player1, sorted_players[j])
+                                not in self.played_pairs
+                                and (sorted_players[j], player1)
+                                not in self.played_pairs):
+                            score_diff = abs(player1.score -
+                                             sorted_players[j].score)
                             if score_diff < min_diff:
                                 min_diff = score_diff
                                 player2 = sorted_players[j]
@@ -220,7 +239,12 @@ class Tournament:
         rounds_data = json_data['rounds']
 
         # Créer l'objet Tournament avec les données récupérées
-        tournament = cls(name, place, date_start, date_end, director_note, current_round)
+        tournament = cls(name,
+                         place,
+                         date_start,
+                         date_end,
+                         director_note,
+                         current_round)
         tournament.players_list = players_list
         tournament.players_score = players_score
         tournament.played_pairs = played_pairs
@@ -228,7 +252,8 @@ class Tournament:
         tournament.director_note = director_note
 
         # Créer les objets Round à partir des données JSON
-        rounds = [Round.from_json(round_data, tournament) for round_data in rounds_data]
+        rounds = [Round.from_json(round_data, tournament)
+                  for round_data in rounds_data]
         tournament.rounds = rounds
         return tournament
 

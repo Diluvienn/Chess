@@ -1,14 +1,17 @@
-from utils.formatvalidator import validate_date_format, validate_national_chess_id_format
+from utils.formatvalidator import (validate_date_format,
+                                   validate_national_chess_id_format)
 
 
 def get_player_info_from_user():
-    """Obtient les informations d'un nouveau joueur depuis l'entrée utilisateur."""
+    """Obtient les informations d'un nouveau joueur
+    depuis l'entrée utilisateur."""
     while True:
         firstname = input("\nEntrez le prénom du joueur: ").title()
         if all(char.isalpha() or char == '-' for char in firstname):
             break
         else:
-            print("\033[91mLe prénom ne peut contenir que des lettres et des tirets. "
+            print("\033[91mLe prénom ne peut contenir "
+                  "que des lettres et des tirets. "
                   "Veuillez réessayer.\033[0m")
 
     while True:
@@ -20,15 +23,19 @@ def get_player_info_from_user():
                   "que des lettres et des espaces. Veuillez réessayer.\033[0m")
 
     while True:
-        birth = input("Entrez la date de naissance du joueur (format: DD-MM-YYYY): ")
+        birth = input("Entrez la date de naissance du joueur "
+                      "(format: DD-MM-YYYY): ")
         if validate_date_format(birth):
             break
         else:
             print("\033[91mFormat de date invalide. "
-                  "Veuillez utiliser le format 'DD-MM-YYYY'. Veuillez réessayer.\033[0m")
+                  "Veuillez utiliser le format 'DD-MM-YYYY'. "
+                  "Veuillez réessayer.\033[0m")
 
     while True:
-        national_chess_id = input("Entrez l'identifiant national du joueur (format: AB12345): ").upper()
+        national_chess_id = (
+            input("Entrez l'identifiant national du joueur "
+                  "(format: AB12345): ").upper())
         if validate_national_chess_id_format(national_chess_id):
             break
         else:

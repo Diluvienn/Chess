@@ -13,13 +13,15 @@ def display_tournament_list(tournaments):
 def get_tournament_index_from_user(total_tournaments):
     """Ask the user to enter the index of the tournament."""
     while True:
-        index_input = input("\nEntrez l'index du tournoi dont vous souhaitez voir les détails : ")
+        index_input = input("\nEntrez l'index du tournoi "
+                            "dont vous souhaitez voir les détails : ")
         if index_input.isdigit():
             index = int(index_input)
             if 1 <= index <= total_tournaments:
                 return index
             else:
-                print(f"L'index doit être compris entre 1 et {total_tournaments}.")
+                print(f"L'index doit être compris entre 1 "
+                      f"et {total_tournaments}.")
         else:
             print("L'index doit être un nombre entier.")
 
@@ -27,7 +29,8 @@ def get_tournament_index_from_user(total_tournaments):
 def prompt_add_players():
     """Demande à l'utilisateur s'il souhaite ajouter des joueurs au tournoi."""
     while True:
-        add_players_choice = input("Souhaitez-vous ajouter des joueurs au tournoi ? (y/n) : ")
+        add_players_choice = (
+            input("Souhaitez-vous ajouter des joueurs au tournoi ? (y/n) : "))
         if add_players_choice.lower() == "y":
             return True
         elif add_players_choice.lower() == "n":
@@ -39,7 +42,8 @@ def prompt_add_players():
 def prompt_play_tournament():
     """Demande à l'utilisateur s'il souhaite lancer le tournoi."""
     while True:
-        play_tournament_choice = input("Souhaitez-vous lancer le tournoi ? (y/n) : ")
+        play_tournament_choice = (
+            input("Souhaitez-vous lancer le tournoi ? (y/n) : "))
         if play_tournament_choice.lower() == "y":
             return True
         elif play_tournament_choice.lower() == "n":
@@ -54,10 +58,12 @@ def get_user_choice():
 
 def display_add_player_menu(num_players):
     if num_players >= 6 and num_players % 2 == 0:
-        print("\nSouhaitez-vous ajouter un joueur existant (1), créer un nouveau joueur (2) "
+        print("\nSouhaitez-vous ajouter un joueur existant (1), "
+              "créer un nouveau joueur (2) "
               "ou arrêter l'ajout de joueur (3) ?: ")
     else:
-        print("\nSouhaitez-vous ajouter un joueur existant (1) ou créer un nouveau joueur (2) ?: ")
+        print("\nSouhaitez-vous ajouter un joueur existant (1) "
+              "ou créer un nouveau joueur (2) ?: ")
 
 
 def ask_to_play_next_round():
@@ -96,7 +102,8 @@ class TournamentView:
                     for match in round_data['matches']:
                         player1, score1 = list(match['players'].items())[0]
                         player2, score2 = list(match['players'].items())[1]
-                        print(f"    '{player1}' vs '{player2}': {score1}-{score2}")
+                        print(f"    '{player1}' vs '{player2}'"
+                              f": {score1}-{score2}")
                 elif round_data == tournament_details['rounds'][0]:
                     print("Le tournoi n'a pas encore débuté.")
                     break
@@ -109,25 +116,29 @@ class TournamentView:
         print(message)
 
     def get_new_tournament_details(self):
-        """Demande à l'utilisateur de saisir les détails pour créer un nouveau tournoi."""
+        """Demande à l'utilisateur de saisir les détails
+        pour créer un nouveau tournoi."""
         print("\nCréation d'un nouveau tournoi:")
         name = input("Nom du tournoi : ").title()
         place = input("Lieu du tournoi : ").title()
         # Demander au contrôleur d'ajouter des notes du directeur
-        director_note = self.tournament_controller.add_director_notes_to_tournament()
+        director_note = (
+            self.tournament_controller.add_director_notes_to_tournament())
         while True:
             date_start = input("Date de début (format DD-MM-YYYY) : ")
             if validate_date_format(date_start):
                 break
             else:
-                print("\033[91mFormat de date incorrect. Veuillez saisir une date au format DD-MM-YYYY.\033[0m")
+                print("\033[91mFormat de date incorrect. "
+                      "Veuillez saisir une date au format DD-MM-YYYY.\033[0m")
 
         while True:
             date_end = input("Date de fin (format DD-MM-YYYY) : ")
             if validate_date_format(date_end):
                 break
             else:
-                print("\033[91mFormat de date incorrect. Veuillez saisir une date au format DD-MM-YYYY.\033[0m")
+                print("\033[91mFormat de date incorrect. "
+                      "Veuillez saisir une date au format DD-MM-YYYY.\033[0m")
 
         rounds_count = input("Nombre de rounds (facultatif, par défaut 4) : ")
         rounds_count = int(rounds_count) if rounds_count else 4
