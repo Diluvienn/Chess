@@ -1,6 +1,4 @@
-
-
-from model.tournament import Tournament, calculate_leaderboard
+from model.tournament import Tournament
 from model.round import Round
 from datetime import datetime
 from repository.tournament_repository import TournamentRepository
@@ -20,6 +18,26 @@ def get_tournament_name_by_index(tournaments, tournament_index):
         return tournaments[tournament_index - 1].name
     else:
         return None
+
+
+def calculate_leaderboard(tournament, previous_scores):
+    # Créez une liste de tuples (joueur, score total)
+    leaderboard = [(player, player.calculate_total_score(tournament.rounds, previous_scores))
+                   for player in tournament.players_list]
+    # Triez la liste en fonction du score total (en ordre décroissant)
+    sorted_leaderboard = sorted(leaderboard, key=lambda x: x[1], reverse=True)
+
+    tournament.players_score = {f"{player.firstname} {player.lastname}": score for player, score in sorted_leaderboard}
+    # Affichez le classement
+    # Vérifier si c'est le dernier round
+    if tournament.current_round == len(tournament.rounds) - 1:
+        print("\nClassement final du tournoi :")
+    else:
+        print(f"\nClassement fin du round {tournament.current_round + 1} :")
+
+    # Afficher le classement
+    for i, (player, score) in enumerate(sorted_leaderboard, start=1):
+        print(f"{i}. {player.firstname} {player.lastname} : {score} points")
 
 
 class TournamentController:

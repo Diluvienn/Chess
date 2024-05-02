@@ -10,6 +10,7 @@ Usage:
     # Play the match
     # Get the string representation of the match
 """
+from utils.match_find_player import find_player
 
 
 class Match:
@@ -19,6 +20,12 @@ class Match:
 
         self.players = players
         self.result = None
+
+    def __str__(self):
+        player1_name = f"{list(self.players.keys())[0].firstname} {list(self.players.keys())[0].lastname}"
+        player2_name = f"{list(self.players.keys())[1].firstname} {list(self.players.keys())[1].lastname}"
+        return (f"\nMatch: {player1_name} vs {player2_name}, Scores: {self.players[list(self.players.keys())[0]]}-"
+                f"{self.players[list(self.players.keys())[1]]}")
 
     def to_json(self):
         # Convertir les clés en chaînes de caractères pour les noms des joueurs
@@ -58,12 +65,6 @@ class Match:
         match = cls(players)
         return match
 
-    def __str__(self):
-        player1_name = f"{list(self.players.keys())[0].firstname} {list(self.players.keys())[0].lastname}"
-        player2_name = f"{list(self.players.keys())[1].firstname} {list(self.players.keys())[1].lastname}"
-        return (f"\nMatch: {player1_name} vs {player2_name}, Scores: {self.players[list(self.players.keys())[0]]}-"
-                f"{self.players[list(self.players.keys())[1]]}")
-
     def play_match(self):
         # Afficher les détails du match
         player1 = list(self.players.keys())[0]
@@ -100,13 +101,6 @@ class Match:
                 self.players[player] += 0.5
 
         return result
-
-
-def find_player(tournament, player_firstname, player_lastname):
-    for p in tournament.players_list:
-        if p.firstname == player_firstname and p.lastname == player_lastname:
-            return p
-    return None
 
 
 if __name__ == "__main__":

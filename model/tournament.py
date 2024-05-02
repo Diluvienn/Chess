@@ -79,6 +79,12 @@ class Tournament:
         else:
             raise KeyError(f"Invalid key: {key}")
 
+    def __str__(self):
+        """Return a string representation of the tournaments."""
+        return (f"Tournament: {self.name}\nLocation: {self.place}\nStart: {self.date_start}\n"
+                f"End: {self.date_end}\nRounds: {self.rounds}\n"
+                f"Current Round: {self.current_round}\nDirector Note: {self.director_note}")
+
     def to_json(self):
         """Converts tournament data to a JSON-compatible dictionary.
 
@@ -226,28 +232,6 @@ class Tournament:
         tournament.rounds = rounds
         return tournament
 
-    def __str__(self):
-        """Return a string representation of the tournaments."""
-        return (f"Tournament: {self.name}\nLocation: {self.place}\nStart: {self.date_start}\n"
-                f"End: {self.date_end}\nRounds: {self.rounds}\n"
-                f"Current Round: {self.current_round}\nDirector Note: {self.director_note}")
 
-
-def calculate_leaderboard(tournament, previous_scores):
-    # Créez une liste de tuples (joueur, score total)
-    leaderboard = [(player, player.calculate_total_score(tournament.rounds, previous_scores))
-                   for player in tournament.players_list]
-    # Triez la liste en fonction du score total (en ordre décroissant)
-    sorted_leaderboard = sorted(leaderboard, key=lambda x: x[1], reverse=True)
-
-    tournament.players_score = {f"{player.firstname} {player.lastname}": score for player, score in sorted_leaderboard}
-    # Affichez le classement
-    # Vérifier si c'est le dernier round
-    if tournament.current_round == len(tournament.rounds) - 1:
-        print("\nClassement final du tournoi :")
-    else:
-        print(f"\nClassement fin du round {tournament.current_round + 1} :")
-
-    # Afficher le classement
-    for i, (player, score) in enumerate(sorted_leaderboard, start=1):
-        print(f"{i}. {player.firstname} {player.lastname} : {score} points")
+if __name__ == "__main__":
+    pass
