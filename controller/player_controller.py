@@ -15,10 +15,12 @@ class PlayerController:
         else:
             print("Liste des joueurs :\n")
             for index, player_info in enumerate(sorted_players, start=1):
-                print(f"{index}. {player_info['lastname']} {player_info['firstname']}")
+                print(f"{index}. "
+                      f"{player_info['lastname']} {player_info['firstname']}")
 
             while True:
-                choice = input("\nSouhaitez-vous les détails d'un joueur ? (y/n): ").lower()
+                choice = input("\nSouhaitez-vous les détails d'un joueur ? "
+                               "(y/n): ").lower()
                 if choice == "n":
                     break
                 elif choice == "y":
@@ -28,9 +30,11 @@ class PlayerController:
                         if 1 <= player_index <= len(sorted_players):
                             player_info = sorted_players[player_index - 1]
                             print("\nDétails du joueur :\n")
-                            print(f"Nom: {player_info['lastname']} {player_info['firstname']}")
+                            print(f"Nom: {player_info['lastname']} "
+                                  f"{player_info['firstname']}")
                             print(f"Date de naissance: {player_info['birth']}")
-                            print(f"Identifiant national d'échecs: {player_info['national chess ID']}")
+                            print(f"Identifiant national d'échecs: "
+                                  f"{player_info['national chess ID']}")
                         else:
                             print("\033[91mIndex invalide.\033[0m")
 
@@ -38,13 +42,16 @@ class PlayerController:
                         print("\033[91mVeuillez entrer un index valide.\033[0m")
 
                 else:
-                    print("\033Choix invalide. Veuillez entrer 'y' pour oui ou 'n' pour non.\033[0m")
+                    print("\033Choix invalide. "
+                          "Veuillez entrer 'y' ou 'n'.\033[0m")
 
     def create_new_player(self):
         """Obtient les informations du joueur et crée un objet Player."""
-        firstname, lastname, birth, national_chess_id = get_player_info_from_user()
+        firstname, lastname, birth, national_chess_id = (
+            get_player_info_from_user())
         new_player = Player(firstname, lastname, birth, national_chess_id)
-        print(f"La joueuse ou le joueur {new_player.firstname} {new_player.lastname} "
+        print(f"La joueuse ou le joueur "
+              f"{new_player.firstname} {new_player.lastname} "
               f"a bien été ajouté.e à la liste.")
         self.player_repository.add_player(new_player)
         return new_player

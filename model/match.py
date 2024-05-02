@@ -102,19 +102,6 @@ class Match:
         return result
 
 
-# def find_player(tournament, player_firstname, player_lastname):
-#     for p in tournament.players_list:
-#         print(f" p : {p}")
-#         if p.firstname == player_firstname:
-#             print(f"p.firstame : {p.firstname}")
-#             print(f"player_firstname : {player_firstname} ")
-#             if player_lastname and p.lastname != player_lastname:
-#                 print(f"p.lastname : {p.lastname}")
-#                 print(f"player_lastname: {player_lastname}")
-#                 continue
-#             return p
-#     return None
-
 def find_player(tournament, player_firstname, player_lastname):
     for p in tournament.players_list:
         if p.firstname == player_firstname and p.lastname == player_lastname:

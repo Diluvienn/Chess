@@ -1,4 +1,3 @@
-import keyboard
 from utils.formatvalidator import validate_date_format
 
 
@@ -21,11 +20,8 @@ def get_tournament_index_from_user(total_tournaments):
                 return index
             else:
                 print(f"L'index doit être compris entre 1 et {total_tournaments}.")
-        elif keyboard.is_pressed('esc'):
-            break
         else:
             print("L'index doit être un nombre entier.")
-
 
 
 def prompt_add_players():
@@ -36,8 +32,6 @@ def prompt_add_players():
             return True
         elif add_players_choice.lower() == "n":
             return False
-        elif keyboard.is_pressed('esc'):
-            break
         else:
             print("\033[91mVeuillez effectuer un choix valide.\033[0m")
 
@@ -50,8 +44,6 @@ def prompt_play_tournament():
             return True
         elif play_tournament_choice.lower() == "n":
             return False
-        elif keyboard.is_pressed('esc'):
-            break
         else:
             print("\033[91mVeuillez effectuer un choix valide\033[0m")
 
@@ -119,11 +111,7 @@ class TournamentView:
     def get_new_tournament_details(self):
         """Demande à l'utilisateur de saisir les détails pour créer un nouveau tournoi."""
         print("\nCréation d'un nouveau tournoi:")
-        while True:
-            name = input("Nom du tournoi : ").title()
-            if keyboard.is_pressed('esc'):
-                break
-
+        name = input("Nom du tournoi : ").title()
         place = input("Lieu du tournoi : ").title()
         # Demander au contrôleur d'ajouter des notes du directeur
         director_note = self.tournament_controller.add_director_notes_to_tournament()
@@ -131,16 +119,12 @@ class TournamentView:
             date_start = input("Date de début (format DD-MM-YYYY) : ")
             if validate_date_format(date_start):
                 break
-            elif keyboard.is_pressed('esc'):
-                break
             else:
                 print("\033[91mFormat de date incorrect. Veuillez saisir une date au format DD-MM-YYYY.\033[0m")
 
         while True:
             date_end = input("Date de fin (format DD-MM-YYYY) : ")
             if validate_date_format(date_end):
-                break
-            elif keyboard.is_pressed('esc'):
                 break
             else:
                 print("\033[91mFormat de date incorrect. Veuillez saisir une date au format DD-MM-YYYY.\033[0m")

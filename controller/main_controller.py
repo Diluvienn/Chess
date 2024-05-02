@@ -31,8 +31,11 @@ class MainController:
         _player_repository = PlayerRepository()
 
         # Création de TournamentController
-        self._tournament_controller = TournamentController(_tournament_repository, None,
-                                                           _player_repository, None)
+        self._tournament_controller = (
+            TournamentController(_tournament_repository,
+                                 None,
+                                 _player_repository,
+                                 None))
 
         # Création de TournamentView avec le contrôleur correspondant
         _tournament_view = TournamentView(self._tournament_controller)
@@ -43,9 +46,13 @@ class MainController:
         self._main_view = MainView()
 
         # Création de PlayerController avec le view correspondant
-        self._player_controller = PlayerController(_player_repository, _player_view)
-        self._tournament_controller = TournamentController(_tournament_repository, _tournament_view,
-                                                           _player_repository, self._player_controller)
+        self._player_controller = (
+            PlayerController(_player_repository, _player_view))
+        self._tournament_controller = (
+            TournamentController(_tournament_repository,
+                                 _tournament_view,
+                                 _player_repository,
+                                 self._player_controller))
 
         # Enregistrer la fonction de détection de la touche "Échap"
         keyboard.on_press_key('esc', self.escape_pressed)
@@ -83,7 +90,8 @@ class MainController:
                 print("\nA bientôt !")
                 break
             else:
-                print("\033[91mChoix invalide. Veuillez entrer un numéro valide.\033[0m")
+                print("\033[91mChoix invalide. "
+                      "Veuillez entrer un numéro valide.\033[0m")
 
             cleanup()
 

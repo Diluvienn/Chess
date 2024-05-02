@@ -1,4 +1,4 @@
-import keyboard
+
 
 from model.tournament import Tournament, calculate_leaderboard
 from model.round import Round
@@ -23,7 +23,11 @@ def get_tournament_name_by_index(tournaments, tournament_index):
 
 
 class TournamentController:
-    def __init__(self, tournament_repository, tournament_view, player_repository, player_controller):
+    def __init__(self,
+                 tournament_repository,
+                 tournament_view,
+                 player_repository,
+                 player_controller):
         self.tournament_repository = tournament_repository
         self.tournament_view = tournament_view
         self.player_repository = player_repository
@@ -31,27 +35,31 @@ class TournamentController:
         self.num_players = 0
 
     def show_tournaments(self):
-        tournaments = self.tournament_repository.get_tournaments_by_alphabetical_order()
+        tournaments = (
+            self.tournament_repository.get_tournaments_by_alphabetical_order())
         display_tournament_list(tournaments)
         return tournaments
 
     def show_tournament_details(self):
-        while True:
-            tournaments = self.show_tournaments()
-            total_tournaments = len(tournaments)
-            tournament_index = get_tournament_index_from_user(total_tournaments)
-            tournament_name = get_tournament_name_by_index(tournaments, tournament_index)
-            self.get_tournament_details(tournament_name)
-            if keyboard.is_pressed('esc'):
-                break
-
+        tournaments = self.show_tournaments()
+        total_tournaments = len(tournaments)
+        tournament_index = (
+            get_tournament_index_from_user(total_tournaments))
+        tournament_name = (
+            get_tournament_name_by_index(tournaments, tournament_index))
+        self.get_tournament_details(tournament_name)
 
     def create_new_tournament(self):
         """Crée un nouveau tournoi avec les détails fournis par l'utilisateur."""
-        name, place, date_start, date_end, director_note, rounds = self.tournament_view.get_new_tournament_details()
+        (name, place, date_start, date_end,
+         director_note, rounds) = (
+            self.tournament_view.get_new_tournament_details())
 
         # Création du tournoi avec les détails fournis
-        new_tournament = Tournament(name=name, place=place, date_start=date_start, date_end=date_end,
+        new_tournament = Tournament(name=name,
+                                    place=place,
+                                    date_start=date_start,
+                                    date_end=date_end,
                                     director_note=director_note)
 
         # Ajout des rounds
@@ -70,7 +78,8 @@ class TournamentController:
         if prompt_add_players():
             self.add_players_to_tournament(new_tournament)
 
-        print(f"\nLe tournoi {new_tournament.name} à {new_tournament.place} avec a bien été enregistré.")
+        print(f"\nLe tournoi {new_tournament.name} à "
+              f"{new_tournament.place} avec a bien été enregistré.")
 
         return new_tournament
 
@@ -93,13 +102,15 @@ class TournamentController:
 
         while True:
             display_add_player_menu(self.num_players)
+            print("Info : Le nombre de joueur doit être de minimum 6 et pair.")
             user_choice = get_user_choice()
-            print("Le nombre de joueur doit être de minimum 6 et pair.")
             if user_choice == "1":
-                selected_player, index = get_selected_player(sorted_players_list)
+                selected_player, index = (
+                    get_selected_player(sorted_players_list))
                 # Vérifier si le joueur est déjà dans le tournoi
                 if any(player.firstname == selected_player.firstname and
-                       player.lastname == selected_player.lastname for player in selected_players):
+                       player.lastname == selected_player.lastname
+                       for player in selected_players):
                     print("Ce joueur est déjà ajouté au tournoi.")
 
                     continue
@@ -107,7 +118,9 @@ class TournamentController:
                 selected_players_index.append(index)
                 selected_players.append(selected_player)
                 self.num_players += 1
-                print(f"Ajout du joueur {selected_player.firstname} {selected_player.lastname}")
+                print(f"Ajout du joueur "
+                      f"{selected_player.firstname} "
+                      f"{selected_player.lastname}")
                 print("Joueurs inscrits dans le tournoi:")
                 for player in selected_players:
                     print(f"- {player.firstname} {player.lastname}")
@@ -120,34 +133,39 @@ class TournamentController:
                 # Ajouter le joueur au tournoi
                 selected_players.append(new_player)
                 self.num_players += 1
-                print(f"Ajout du joueur {new_player.firstname} {new_player.lastname}")
+                print(f"Ajout du joueur "
+                      f"{new_player.firstname} {new_player.lastname}")
                 print("Joueurs inscrits dans le tournoi:")
                 for player in selected_players:
                     print(f"- {player.firstname} {player.lastname}")
 
             elif user_choice == "3":
                 # Vérifier si le nombre de joueurs est pair et au moins 6
-                if len(selected_players) >= 6 and len(selected_players) % 2 == 0:
+                if (len(selected_players) >= 6
+                        and len(selected_players) % 2 == 0):
                     for player in selected_players:
                         tournament.players_list.append(player)
                     self.tournament_repository.add_tournament(tournament)
                     print("Les joueurs ont bien été ajoutés.")
                     if prompt_play_tournament():
                         self.play_tournament(tournament)
-                    break  # Retourner au code appelant après avoir quitté la boucle
+                    break
                 else:
-                    print("Le nombre d'inscrits doit être pair et au moins égal à 6.")
+                    print("Le nombre d'inscrits doit être pair "
+                          "et au moins égal à 6.")
             else:
                 print("\033[91mVeuillez indiquer un choix valide.\033[0m")
 
     def resume_unstarted_tournament(self):
-        chosen_tournament = self.tournament_repository.resume_unstarted_tournament()
+        chosen_tournament = (
+            self.tournament_repository.resume_unstarted_tournament())
         if chosen_tournament:
             tournament = Tournament.from_json(chosen_tournament)
             self.add_players_to_tournament(tournament)
 
     def get_tournament_details(self, tournament_name):
-        tournament_details = self.tournament_repository.get_tournament_details(tournament_name)
+        tournament_details =\
+            self.tournament_repository.get_tournament_details(tournament_name)
         if tournament_details:
             # Afficher les détails du tournoi
             self.tournament_view.display_tournament_details(tournament_details)
@@ -180,7 +198,8 @@ class TournamentController:
 
             # Définir l'heure de début du round s'il n'est pas déjà défini
             if current_round.start_time is None:
-                current_round.start_time = datetime.now().strftime("%d-%m-%Y %H:%M")
+                current_round.start_time = (
+                    datetime.now().strftime("%d-%m-%Y %H:%M"))
 
             # Générer les paires de matchs pour ce round
             tournament.generate_pairs_for_round()
@@ -192,17 +211,19 @@ class TournamentController:
                 player2_name = f"{player2.firstname} {player2.lastname}"
                 score1 = match.players[player1]
                 score2 = match.players[player2]
-                print(f"Match: {player1_name} vs {player2_name}, Scores: {score1}-{score2}")
-                # print(f"Start Time: {current_round.start_time}, End Time: {current_round.end_time}")
+                print(f"Match: {player1_name} vs {player2_name}, "
+                      f"Scores: {score1}-{score2}")
 
             # Récupérer les scores précédents à partir des données du tournoi
-            previous_scores = self.players_score if hasattr(self, 'players_score') else {}
+            previous_scores = self.players_score \
+                if hasattr(self, 'players_score') else {}
 
             # Calculer et afficher le classement provisoire
             calculate_leaderboard(tournament, previous_scores)
 
             if current_round.end_time is None:
-                current_round.end_time = datetime.now().strftime("%d-%m-%Y %H:%M")
+                current_round.end_time = (
+                    datetime.now().strftime("%d-%m-%Y %H:%M"))
 
             # Demander si vous voulez jouer le prochain round
 
