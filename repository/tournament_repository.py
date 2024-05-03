@@ -102,21 +102,6 @@ class TournamentRepository:
         with open(self.filename, 'w') as file:
             json.dump(tournaments, file, indent=4)
 
-    def resume_unstarted_tournament(self):
-        unstarted_tournaments = self.find_unstarted_tournaments()
-        if not unstarted_tournaments:
-            print("Aucun tournoi non débuté trouvé.")
-            return
-        print("\nTournois non débuté :")
-        for idx, tournament in enumerate(unstarted_tournaments, 1):
-            print(f"{idx}. {tournament['name']} à {tournament['place']}")
-        choice = int(input("Choisissez le numéro du tournoi "
-                           "dont vous souhaitez renseigner les joueurs : "))
-        chosen_tournament = unstarted_tournaments[choice - 1]
-        print(f"\nVous avez choisi le tournoi {chosen_tournament['name']} "
-              f"à {chosen_tournament['place']}")
-        return chosen_tournament
-
     def find_unfinished_tournaments(self):
         tournaments = self.load_tournaments()
         unfinished_tournaments = []

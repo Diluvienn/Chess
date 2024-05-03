@@ -1,6 +1,8 @@
+from datetime import datetime
+
+from utils.confirm_return_menu import confirm_return_to_previous_menu, confirm_stop_add_note
 from model.tournament import Tournament
 from model.round import Round
-from datetime import datetime
 from repository.tournament_repository import TournamentRepository
 from repository.player_repository import get_selected_player
 from view.tournament_view import (display_tournament_list,
@@ -67,16 +69,25 @@ class TournamentController:
         total_tournaments = len(tournaments)
         tournament_index = (
             get_tournament_index_from_user(total_tournaments))
-        tournament_name = (
-            get_tournament_name_by_index(tournaments, tournament_index))
-        self.get_tournament_details(tournament_name)
+        if tournament_index is not None:
+            tournament_name = (
+                get_tournament_name_by_index(tournaments, tournament_index))
+            self.get_tournament_details(tournament_name)
+        else:
+            return
 
     def create_new_tournament(self):
         """Crée un nouveau tournoi avec les détails
         fournis par l'utilisateur."""
-        (name, place, date_start, date_end,
-         director_note, rounds) = (
+        tournament_details = (
             self.tournament_view.get_new_tournament_details())
+
+        if tournament_details is None:
+            print("Retour au menu principal sans sauvegarde.")
+            return
+
+        (name, place, date_start, date_end,
+         director_note, rounds) = tournament_details
 
         # Création du tournoi avec les détails fournis
         new_tournament = Tournament(name=name,
@@ -86,23 +97,24 @@ class TournamentController:
                                     director_note=director_note)
 
         # Ajout des rounds
-        for round_details in rounds:
-            round_name = round_details["name"]
-            start_time = round_details["start_time"]
-            end_time = round_details["end_time"]
-            matches = round_details.get("matches", [])
-            new_round = Round(round_name, matches, start_time, end_time)
-            new_tournament.add_round(new_round)
+        if rounds is not None:
+            for round_details in rounds:
+                round_name = round_details["name"]
+                start_time = round_details["start_time"]
+                end_time = round_details["end_time"]
+                matches = round_details.get("matches", [])
+                new_round = Round(round_name, matches, start_time, end_time)
+                new_tournament.add_round(new_round)
 
-        # Ajout du tournoi à la base de données
-        self.tournament_repository.add_tournament(new_tournament)
+            # Ajout du tournoi à la base de données
+            self.tournament_repository.add_tournament(new_tournament)
 
-        # Initialisation de la liste des joueurs du tournoi
-        if prompt_add_players():
-            self.add_players_to_tournament(new_tournament)
+            # Initialisation de la liste des joueurs du tournoi
+            if prompt_add_players():
+                self.add_players_to_tournament(new_tournament)
 
-        print(f"\nLe tournoi {new_tournament.name} à "
-              f"{new_tournament.place} avec a bien été enregistré.")
+            print(f"\nLe tournoi {new_tournament.name} à "
+                  f"{new_tournament.place} avec a bien été enregistré.")
 
         return new_tournament
 
@@ -123,9 +135,10 @@ class TournamentController:
                 print(f"- {player.firstname} {player.lastname}")
             tournament.players_list = []
 
+        print("\n\033[92mInfo : Le nombre de joueur doit être de minimum 6 et pair.\033[0m")
+
         while True:
             display_add_player_menu(self.num_players)
-            print("Info : Le nombre de joueur doit être de minimum 6 et pair.")
             user_choice = get_user_choice()
             if user_choice == "1":
                 selected_player, index = (
@@ -144,23 +157,26 @@ class TournamentController:
                 print(f"Ajout du joueur "
                       f"{selected_player.firstname} "
                       f"{selected_player.lastname}")
-                print("Joueurs inscrits dans le tournoi:")
+                print("\nJoueurs inscrits dans le tournoi:")
                 for player in selected_players:
                     print(f"- {player.firstname} {player.lastname}")
 
             elif user_choice == "2":
                 # Ajouter un nouveau joueur
                 new_player = self.player_controller.create_new_player()
-                print(f"new_player : {new_player}")
+                if new_player is not None:
+                    print(f"new_player : {new_player}")
 
-                # Ajouter le joueur au tournoi
-                selected_players.append(new_player)
-                self.num_players += 1
-                print(f"Ajout du joueur "
-                      f"{new_player.firstname} {new_player.lastname}")
-                print("Joueurs inscrits dans le tournoi:")
-                for player in selected_players:
-                    print(f"- {player.firstname} {player.lastname}")
+                    # Ajouter le joueur au tournoi
+                    selected_players.append(new_player)
+                    self.num_players += 1
+                    print(f"Ajout du joueur "
+                          f"{new_player.firstname} {new_player.lastname}")
+                    print("\nJoueurs inscrits dans le tournoi:")
+                    for player in selected_players:
+                        print(f"- {player.firstname} {player.lastname}")
+                else:
+                    continue
 
             elif user_choice == "3":
                 # Vérifier si le nombre de joueurs est pair et au moins 6
@@ -180,14 +196,19 @@ class TournamentController:
                 print("\033[91mVeuillez indiquer un choix valide.\033[0m")
 
     def resume_unstarted_tournament(self):
-        chosen_tournament = (
-            self.tournament_repository.resume_unstarted_tournament())
+        unstarted_tournaments = self.tournament_repository.find_unstarted_tournaments()
+        if not unstarted_tournaments:
+            self.tournament_view.display_no_unstarted_tournaments_message()
+            return
+        self.tournament_view.display_unstarted_tournaments(unstarted_tournaments)
+        chosen_tournament = self.tournament_view.get_chosen_tournament(unstarted_tournaments)
+        self.tournament_view.display_chosen_tournament(chosen_tournament)
         if chosen_tournament:
             tournament = Tournament.from_json(chosen_tournament)
             self.add_players_to_tournament(tournament)
 
     def get_tournament_details(self, tournament_name):
-        tournament_details =\
+        tournament_details = \
             self.tournament_repository.get_tournament_details(tournament_name)
         if tournament_details:
             # Afficher les détails du tournoi
@@ -195,16 +216,40 @@ class TournamentController:
         else:
             print("Le tournoi spécifié n'existe pas ou n'a pas été trouvé.")
 
+    # def add_director_notes_to_tournament(self):
+    #     notes = input("Ajouter des notes du directeur (y/n) ? : ")
+    #     if notes.lower() == "y":
+    #         notes_text = input("Entrez les notes du directeur : ")
+    #         if notes_text == "q":
+    #             if confirm_stop_add_note():
+    #                 return ""
+    #         else:
+    #             return notes_text
+    #     elif notes.lower() == "n":
+    #         return ""
+    #     elif notes.lower() == 'q':
+    #         if confirm_return_to_previous_menu():
+    #             return None
+    #     else:
+    #         print("Choix invalide.")
+    #         return self.add_director_notes_to_tournament()
     def add_director_notes_to_tournament(self):
-        notes = input("Ajouter des notes du directeur (y/n) ? : ")
-        if notes.lower() == "y":
-            notes_text = input("Entrez les notes du directeur : ")
-            return notes_text
-        elif notes.lower() == "n":
-            return ""
-        else:
-            print("Choix invalide.")
-            return self.add_director_notes_to_tournament()
+        while True:
+            notes = input("Ajouter des notes du directeur (y/n) ? : ")
+            if notes.lower() == "y":
+                notes_text = input("Entrez les notes du directeur : ")
+                if notes_text == "q":
+                    if confirm_stop_add_note():
+                        return ""
+                else:
+                    return notes_text
+            elif notes.lower() == "n":
+                return ""
+            elif notes.lower() == 'q':
+                if confirm_return_to_previous_menu():
+                    return None
+            else:
+                print("Choix invalide.")
 
     def resume_tournament(self):
         """Reprend un tournoi non terminé."""

@@ -4849,5 +4849,42 @@
                 "national chess ID": "ZS45412"
             }
         ]
+    },
+    {
+        "name": "Aa",
+        "place": "Aa",
+        "date_start": "11-11-2111",
+        "date_end": "11-11-2111",
+        "director_note": "",
+        "rounds": [
+            {
+                "name": "Round 1",
+                "matches": [],
+                "start_time": null,
+                "end_time": null
+            },
+            {
+                "name": "Round 2",
+                "matches": [],
+                "start_time": null,
+                "end_time": null
+            },
+            {
+                "name": "Round 3",
+                "matches": [],
+                "start_time": null,
+                "end_time": null
+            },
+            {
+                "name": "Round 4",
+                "matches": [],
+                "start_time": null,
+                "end_time": null
+            }
+        ],
+        "current_round": 0,
+        "players_score": {},
+        "played_pairs": [],
+        "players_list": []
     }
 ]

@@ -1,4 +1,5 @@
 from utils.formatvalidator import validate_date_format
+from utils.confirm_return_menu import confirm_return_to_main_menu
 
 
 def display_tournament_list(tournaments):
@@ -12,18 +13,21 @@ def display_tournament_list(tournaments):
 
 def get_tournament_index_from_user(total_tournaments):
     """Ask the user to enter the index of the tournament."""
+    print("\n\033[92mRetour au menu principal: 'q'\033[0m")
     while True:
         index_input = input("\nEntrez l'index du tournoi "
-                            "dont vous souhaitez voir les détails : ")
+                            "dont vous souhaitez voir les détails: ")
         if index_input.isdigit():
             index = int(index_input)
             if 1 <= index <= total_tournaments:
                 return index
             else:
-                print(f"L'index doit être compris entre 1 "
-                      f"et {total_tournaments}.")
+                print(f"\033[91mL'index doit être compris entre 1 "
+                      f"et {total_tournaments}.\033[0m")
+        elif index_input == "q":
+            break
         else:
-            print("L'index doit être un nombre entier.")
+            print("\033[91mL'index doit être un nombre entier.\033[0m")
 
 
 def prompt_add_players():
@@ -118,14 +122,64 @@ class TournamentView:
     def get_new_tournament_details(self):
         """Demande à l'utilisateur de saisir les détails
         pour créer un nouveau tournoi."""
-        print("\nCréation d'un nouveau tournoi:")
-        name = input("Nom du tournoi : ").title()
-        place = input("Lieu du tournoi : ").title()
+        name = None
+        place = None
+        date_start = None
+        date_end = None
+        director_note = None
+        rounds = None
+
+        while True:
+            print("\n\033[92mRetour au menu principal sans sauvegarde : 'q'\033[0m")
+            print("\nCréation d'un nouveau tournoi:")
+            choice = input("Nom du tournoi: ").title()
+
+            if choice.lower() == 'q':
+                if confirm_return_to_main_menu():
+                    return None, None, None, None, None, None
+                else:
+                    continue
+
+            name = choice
+            if not name:
+                print("\033[91mLe nom du tournoi ne peut pas être vide. "
+                      "Veuillez entrer un nom de tournoi valide.\033[0m")
+                continue
+            else:
+                break
+
+        while True:
+            choice = input("Lieu du tournoi: ").title()
+
+            if choice.lower() == 'q':
+                if confirm_return_to_main_menu():
+                    return None, None, None, None, None, None
+                else:
+                    continue
+
+            place = choice
+            if not place:
+                print("\033[91mLe lieu du tournoi ne peut pas être vide. "
+                      "Veuillez entrer un lieu de tournoi valide.\033[0m")
+                continue
+            else:
+                break
+
         # Demander au contrôleur d'ajouter des notes du directeur
         director_note = (
             self.tournament_controller.add_director_notes_to_tournament())
+        if director_note is None:
+            return None, None, None, None, None, None
+
         while True:
-            date_start = input("Date de début (format DD-MM-YYYY) : ")
+            date_start = input("Date de début (format DD-MM-YYYY): ")
+
+            if date_start.lower() == 'q':
+                if confirm_return_to_main_menu():
+                    return None, None, None, None, None, None
+                else:
+                    continue
+
             if validate_date_format(date_start):
                 break
             else:
@@ -133,25 +187,64 @@ class TournamentView:
                       "Veuillez saisir une date au format DD-MM-YYYY.\033[0m")
 
         while True:
-            date_end = input("Date de fin (format DD-MM-YYYY) : ")
+            date_end = input("Date de fin (format DD-MM-YYYY): ")
+
+            if date_end.lower() == 'q':
+                if confirm_return_to_main_menu():
+                    return None, None, None, None, None, None
+                else:
+                    continue
+
             if validate_date_format(date_end):
                 break
             else:
                 print("\033[91mFormat de date incorrect. "
                       "Veuillez saisir une date au format DD-MM-YYYY.\033[0m")
 
-        rounds_count = input("Nombre de rounds (facultatif, par défaut 4) : ")
-        rounds_count = int(rounds_count) if rounds_count else 4
+        while True:
+            rounds_count = input(
+                "Nombre de rounds (facultatif, par défaut 4): ")
 
-        rounds = []
-        for i in range(rounds_count):
-            round_name = f"Round {i + 1}"
-            round_details = {
-                "name": round_name,
-                "matches": [],
-                "start_time": None,
-                "end_time": None
-            }
-            rounds.append(round_details)
+            if rounds_count.lower() == 'q':
+                if confirm_return_to_main_menu():
+                    return None, None, None, None, None, None
+                else:
+                    continue
 
-        return name, place, date_start, date_end, director_note, rounds
+            rounds_count = int(rounds_count) if rounds_count else 4
+
+            rounds = []
+            for i in range(rounds_count):
+                round_name = f"Round {i + 1}"
+                round_details = {
+                    "name": round_name,
+                    "matches": [],
+                    "start_time": None,
+                    "end_time": None
+                }
+                rounds.append(round_details)
+
+            return name, place, date_start, date_end, director_note, rounds
+
+    def display_no_unstarted_tournaments_message(self):
+        """Affiche un message indiquant qu'aucun tournoi non débuté n'a été trouvé."""
+        print("Aucun tournoi non débuté trouvé.")
+
+    def display_unstarted_tournaments(self, unstarted_tournaments):
+        """Affiche la liste des tournois non débutés."""
+        print("\nTournois non débutés :")
+        for idx, tournament in enumerate(unstarted_tournaments, 1):
+            print(f"{idx}. {tournament['name']} à {tournament['place']}")
+
+    def get_chosen_tournament(self, unstarted_tournaments):
+        """Demande à l'utilisateur de choisir un tournoi."""
+        choice = int(input("Choisissez le numéro du tournoi dont vous souhaitez renseigner les joueurs : "))
+        return unstarted_tournaments[choice - 1]
+
+    def display_chosen_tournament(self, chosen_tournament):
+        """Affiche le tournoi choisi par l'utilisateur."""
+        print(f"\nVous avez choisi le tournoi {chosen_tournament['name']} à {chosen_tournament['place']}")
+
+
+if __name__ == "__main__":
+    pass
