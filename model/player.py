@@ -70,3 +70,20 @@ class Player:
         player = cls(firstname, lastname, birth, national_chess_id)
 
         return player
+
+    def fullname(self):
+        """Retourne le nom complet du joueur."""
+        return f"{self.firstname} {self.lastname}"
+
+    def calculate_total_score(self, rounds, previous_scores=None):
+        total_score = self.score
+
+        for round in rounds:
+            for match in round.matches:
+                if self in match.players:
+                    total_score += match.players[self]
+        return total_score
+
+
+if __name__ == "__main__":
+    pass

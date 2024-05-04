@@ -48,10 +48,10 @@ class PlayerController:
                 if choice == "n":
                     break
                 elif choice == "y":
-                    print("\033[92mRetour au menu principal : 'q'.\033[0m")
+                    print("\n\033[92mRetour au menu principal : 'q'.\033[0m")
                     player_index = input("Veuillez "
                                          "indiquer l'index du joueur : ")
-                    if player_index is not None:
+                    if player_index != "q":
                         try:
                             player_index = int(player_index)
                             if 1 <= player_index <= len(sorted_players):
@@ -59,16 +59,12 @@ class PlayerController:
                                 print("\nDétails du joueur :\n")
                                 print(f"Nom: {player_info['lastname']} "
                                       f"{player_info['firstname']}")
-                                print(f"Date de naissance: "
-                                      f"{player_info['birth']}")
-                                print(f"Identifiant national d'échecs: "
-                                      f"{player_info['national chess ID']}")
+                                print(f"Date de naissance: {player_info['birth']}")
+                                print(f"Identifiant national d'échecs: {player_info['national chess ID']}")
                             else:
                                 print("\033[91mIndex invalide.\033[0m")
-
                         except ValueError:
-                            print("\033[91mVeuillez "
-                                  "entrer un index valide.\033[0m")
+                            print("\033[91mVeuillez entrer un numéro valide.\033[0m")
                     else:
                         return
 
