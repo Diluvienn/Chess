@@ -23,12 +23,20 @@ Installation
 
         git clone https://github.com/Diluvienn/Chess.git
 
-    Créez un environnement virtuel Dans le terminal :
+    Créez un environnement virtuel 
+    #### Sur Windows
+    Dans le terminal :
 
         cd Chess
         python -m venv venv
         venv/Scripts/activate
 
+    #### Sur macOS et Linux
+    Dans le terminal :
+
+        cd Chess
+        python -m venv venv
+        source venv/bin/activate
 Installez les dépendances
 
     pip install -r requirements.txt
