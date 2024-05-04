@@ -119,10 +119,19 @@ class Tournament:
         }
 
     def add_round(self, new_round):
-        """Ajoute un round au tournoi."""
+        """Add a round to the tournament."""
         self.rounds.append(new_round)
 
     def generate_pairs_for_round(self):
+        """Generate pairs of matches for the current round.
+
+        This method generates pairs of matches for the current round
+        based on the players' scores and their pairing history.
+
+        For the first round, it randomly pairs players.
+        For subsequent rounds, it pairs players with similar scores
+        while considering the pairing history to avoid duplicate matches.
+        """
 
         # Générer les paires
         # pour le premier round
@@ -151,7 +160,7 @@ class Tournament:
                 paired_players.add(player1)
                 paired_players.add(player2)
 
-            # Enregistrez les paires de matchs générées pour ce round
+            # Enregistrer les paires de matchs générées pour ce round
             self.rounds[self.current_round].matches.extend(round_matches)
 
         else:
@@ -204,13 +213,13 @@ class Tournament:
 
     @classmethod
     def from_json(cls, json_data):
-        """Crée un objet Tournament à partir des données JSON.
+        """Create a Tournament object from JSON data.
 
         Args:
-            json_data (dict): Les données JSON représentant le tournoi.
+            json_data (dict): JSON data representing the tournament.
 
         Returns:
-            Tournament: L'objet Tournament créé à partir des données JSON.
+            Tournament: The Tournament object created from JSON data.
         """
         # Extraire les données du JSON
         name = json_data['name']

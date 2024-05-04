@@ -25,6 +25,14 @@ class Round:
         self.end_time = None
 
     def to_json(self):
+        """Convert round data to a JSON-compatible dictionary.
+
+     Returns:
+         dict: A dictionary containing round information
+               in a JSON-compatible format.
+               Keys include 'name', 'matches',
+               'start_time', and 'end_time'.
+     """
         start_time_str = str(self.start_time) if self.start_time else None
         end_time_str = str(self.end_time) if self.end_time else None
         return {
@@ -36,6 +44,17 @@ class Round:
 
     @classmethod
     def from_json(cls, round_data, tournament):
+        """Create a Round object from JSON data.
+
+        Args:
+            round_data (dict):
+            The JSON data representing the round.
+            tournament (Tournament):
+            The Tournament object associated with the round.
+
+        Returns:
+            Round: The Round object created from the JSON data.
+        """
         name = round_data["name"]
         matches_data = round_data["matches"]
         matches = [Match.from_json(match_data, tournament)
@@ -50,7 +69,7 @@ class Round:
         return round
 
     def add_match(self, match):
-        """Ajoute un match à ce round."""
+        """Add a match to this round."""
         self.matches.append(match)
 
     def get_matches(self):

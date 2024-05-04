@@ -1,3 +1,19 @@
+"""
+Module for managing player information and storage.
+
+This module contains functions and classes for managing player data storage
+and retrieval, including loading players from a JSON file,
+sorting them alphabetically, adding new players, and displaying player details.
+
+Classes:
+    - PlayerRepository:
+    Manages the storage and retrieval of player information.
+
+Functions:
+    - get_selected_player:
+    Get the selected player based on user input.
+"""
+
 import os
 import json
 
@@ -71,9 +87,7 @@ class PlayerRepository:
         return sorted_players
 
     def add_player(self, player):
-        """Add a player to the repository.
-
-        """
+        """Add a player to the repository."""
 
         players = self.load_players()
         players.append(player.to_json())

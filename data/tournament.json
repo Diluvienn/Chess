@@ -566,6 +566,174 @@
         "played_pairs": [
             {
                 "player1": {
+                    "firstname": "Erin",
+                    "lastname": "Williams",
+                    "birth": "27-09-1994",
+                    "national chess ID": "CN32822"
+                },
+                "player2": {
+                    "firstname": "Stacey",
+                    "lastname": "Burns",
+                    "birth": "28-12-1997",
+                    "national chess ID": "OR50619"
+                }
+            },
+            {
+                "player1": {
+                    "firstname": "Stacey",
+                    "lastname": "Burns",
+                    "birth": "28-12-1997",
+                    "national chess ID": "OR50619"
+                },
+                "player2": {
+                    "firstname": "Erin",
+                    "lastname": "Williams",
+                    "birth": "27-09-1994",
+                    "national chess ID": "CN32822"
+                }
+            },
+            {
+                "player1": {
+                    "firstname": "Wanda",
+                    "lastname": "Armstrong",
+                    "birth": "26-02-1973",
+                    "national chess ID": "VM89208"
+                },
+                "player2": {
+                    "firstname": "Frank",
+                    "lastname": "Rivera",
+                    "birth": "04-10-1998",
+                    "national chess ID": "YR85990"
+                }
+            },
+            {
+                "player1": {
+                    "firstname": "Nicole",
+                    "lastname": "Jones",
+                    "birth": "04-04-1994",
+                    "national chess ID": "AV04824"
+                },
+                "player2": {
+                    "firstname": "Michael",
+                    "lastname": "Schmidt",
+                    "birth": "14-12-1997",
+                    "national chess ID": "BV96896"
+                }
+            },
+            {
+                "player1": {
+                    "firstname": "Wanda",
+                    "lastname": "Armstrong",
+                    "birth": "26-02-1973",
+                    "national chess ID": "VM89208"
+                },
+                "player2": {
+                    "firstname": "Frank",
+                    "lastname": "Rivera",
+                    "birth": "04-10-1998",
+                    "national chess ID": "YR85990"
+                }
+            },
+            {
+                "player1": {
+                    "firstname": "Stacey",
+                    "lastname": "Burns",
+                    "birth": "28-12-1997",
+                    "national chess ID": "OR50619"
+                },
+                "player2": {
+                    "firstname": "Erin",
+                    "lastname": "Williams",
+                    "birth": "27-09-1994",
+                    "national chess ID": "CN32822"
+                }
+            },
+            {
+                "player1": {
+                    "firstname": "Nicole",
+                    "lastname": "Jones",
+                    "birth": "04-04-1994",
+                    "national chess ID": "AV04824"
+                },
+                "player2": {
+                    "firstname": "Erin",
+                    "lastname": "Williams",
+                    "birth": "27-09-1994",
+                    "national chess ID": "CN32822"
+                }
+            },
+            {
+                "player1": {
+                    "firstname": "Erin",
+                    "lastname": "Williams",
+                    "birth": "27-09-1994",
+                    "national chess ID": "CN32822"
+                },
+                "player2": {
+                    "firstname": "Stacey",
+                    "lastname": "Burns",
+                    "birth": "28-12-1997",
+                    "national chess ID": "OR50619"
+                }
+            },
+            {
+                "player1": {
+                    "firstname": "Michael",
+                    "lastname": "Schmidt",
+                    "birth": "14-12-1997",
+                    "national chess ID": "BV96896"
+                },
+                "player2": {
+                    "firstname": "Nicole",
+                    "lastname": "Jones",
+                    "birth": "04-04-1994",
+                    "national chess ID": "AV04824"
+                }
+            },
+            {
+                "player1": {
+                    "firstname": "Michael",
+                    "lastname": "Schmidt",
+                    "birth": "14-12-1997",
+                    "national chess ID": "BV96896"
+                },
+                "player2": {
+                    "firstname": "Stacey",
+                    "lastname": "Burns",
+                    "birth": "28-12-1997",
+                    "national chess ID": "OR50619"
+                }
+            },
+            {
+                "player1": {
+                    "firstname": "Erin",
+                    "lastname": "Williams",
+                    "birth": "27-09-1994",
+                    "national chess ID": "CN32822"
+                },
+                "player2": {
+                    "firstname": "Stacey",
+                    "lastname": "Burns",
+                    "birth": "28-12-1997",
+                    "national chess ID": "OR50619"
+                }
+            },
+            {
+                "player1": {
+                    "firstname": "Stacey",
+                    "lastname": "Burns",
+                    "birth": "28-12-1997",
+                    "national chess ID": "OR50619"
+                },
+                "player2": {
+                    "firstname": "Erin",
+                    "lastname": "Williams",
+                    "birth": "27-09-1994",
+                    "national chess ID": "CN32822"
+                }
+            },
+            {
+                "player1": {
                     "firstname": "Frank",
                     "lastname": "Rivera",
                     "birth": "04-10-1998",
@@ -594,6 +762,62 @@
             },
             {
                 "player1": {
+                    "firstname": "Frank",
+                    "lastname": "Rivera",
+                    "birth": "04-10-1998",
+                    "national chess ID": "YR85990"
+                },
+                "player2": {
+                    "firstname": "Wanda",
+                    "lastname": "Armstrong",
+                    "birth": "26-02-1973",
+                    "national chess ID": "VM89208"
+                }
+            },
+            {
+                "player1": {
+                    "firstname": "Michael",
+                    "lastname": "Schmidt",
+                    "birth": "14-12-1997",
+                    "national chess ID": "BV96896"
+                },
+                "player2": {
+                    "firstname": "Nicole",
+                    "lastname": "Jones",
+                    "birth": "04-04-1994",
+                    "national chess ID": "AV04824"
+                }
+            },
+            {
+                "player1": {
+                    "firstname": "Nicole",
+                    "lastname": "Jones",
+                    "birth": "04-04-1994",
+                    "national chess ID": "AV04824"
+                },
+                "player2": {
+                    "firstname": "Michael",
+                    "lastname": "Schmidt",
+                    "birth": "14-12-1997",
+                    "national chess ID": "BV96896"
+                }
+            },
+            {
+                "player1": {
+                    "firstname": "Stacey",
+                    "lastname": "Burns",
+                    "birth": "28-12-1997",
+                    "national chess ID": "OR50619"
+                },
+                "player2": {
+                    "firstname": "Michael",
+                    "lastname": "Schmidt",
+                    "birth": "14-12-1997",
+                    "national chess ID": "BV96896"
+                }
+            },
+            {
+                "player1": {
                     "firstname": "Wanda",
                     "lastname": "Armstrong",
                     "birth": "26-02-1973",
@@ -614,104 +838,6 @@
                     "national chess ID": "AV04824"
                 },
                 "player2": {
-                    "firstname": "Erin",
-                    "lastname": "Williams",
-                    "birth": "27-09-1994",
-                    "national chess ID": "CN32822"
-                }
-            },
-            {
-                "player1": {
-                    "firstname": "Nicole",
-                    "lastname": "Jones",
-                    "birth": "04-04-1994",
-                    "national chess ID": "AV04824"
-                },
-                "player2": {
-                    "firstname": "Michael",
-                    "lastname": "Schmidt",
-                    "birth": "14-12-1997",
-                    "national chess ID": "BV96896"
-                }
-            },
-            {
-                "player1": {
-                    "firstname": "Stacey",
-                    "lastname": "Burns",
-                    "birth": "28-12-1997",
-                    "national chess ID": "OR50619"
-                },
-                "player2": {
-                    "firstname": "Michael",
-                    "lastname": "Schmidt",
-                    "birth": "14-12-1997",
-                    "national chess ID": "BV96896"
-                }
-            },
-            {
-                "player1": {
-                    "firstname": "Stacey",
-                    "lastname": "Burns",
-                    "birth": "28-12-1997",
-                    "national chess ID": "OR50619"
-                },
-                "player2": {
-                    "firstname": "Erin",
-                    "lastname": "Williams",
-                    "birth": "27-09-1994",
-                    "national chess ID": "CN32822"
-                }
-            },
-            {
-                "player1": {
-                    "firstname": "Erin",
-                    "lastname": "Williams",
-                    "birth": "27-09-1994",
-                    "national chess ID": "CN32822"
-                },
-                "player2": {
-                    "firstname": "Stacey",
-                    "lastname": "Burns",
-                    "birth": "28-12-1997",
-                    "national chess ID": "OR50619"
-                }
-            },
-            {
-                "player1": {
-                    "firstname": "Wanda",
-                    "lastname": "Armstrong",
-                    "birth": "26-02-1973",
-                    "national chess ID": "VM89208"
-                },
-                "player2": {
-                    "firstname": "Frank",
-                    "lastname": "Rivera",
-                    "birth": "04-10-1998",
-                    "national chess ID": "YR85990"
-                }
-            },
-            {
-                "player1": {
-                    "firstname": "Michael",
-                    "lastname": "Schmidt",
-                    "birth": "14-12-1997",
-                    "national chess ID": "BV96896"
-                },
-                "player2": {
-                    "firstname": "Stacey",
-                    "lastname": "Burns",
-                    "birth": "28-12-1997",
-                    "national chess ID": "OR50619"
-                }
-            },
-            {
-                "player1": {
-                    "firstname": "Nicole",
-                    "lastname": "Jones",
-                    "birth": "04-04-1994",
-                    "national chess ID": "AV04824"
-                },
-                "player2": {
                     "firstname": "Michael",
                     "lastname": "Schmidt",
                     "birth": "14-12-1997",
@@ -730,48 +856,6 @@
                     "lastname": "Jones",
                     "birth": "04-04-1994",
                     "national chess ID": "AV04824"
-                }
-            },
-            {
-                "player1": {
-                    "firstname": "Michael",
-                    "lastname": "Schmidt",
-                    "birth": "14-12-1997",
-                    "national chess ID": "BV96896"
-                },
-                "player2": {
-                    "firstname": "Nicole",
-                    "lastname": "Jones",
-                    "birth": "04-04-1994",
-                    "national chess ID": "AV04824"
-                }
-            },
-            {
-                "player1": {
-                    "firstname": "Stacey",
-                    "lastname": "Burns",
-                    "birth": "28-12-1997",
-                    "national chess ID": "OR50619"
-                },
-                "player2": {
-                    "firstname": "Erin",
-                    "lastname": "Williams",
-                    "birth": "27-09-1994",
-                    "national chess ID": "CN32822"
-                }
-            },
-            {
-                "player1": {
-                    "firstname": "Erin",
-                    "lastname": "Williams",
-                    "birth": "27-09-1994",
-                    "national chess ID": "CN32822"
-                },
-                "player2": {
-                    "firstname": "Stacey",
-                    "lastname": "Burns",
-                    "birth": "28-12-1997",
-                    "national chess ID": "OR50619"
                 }
             },
             {
@@ -3825,7 +3909,7 @@
                     },
                     {
                         "players": {
-                            "Anne Laure Coudray": 1,
+                            "Anne-Laure Coudray": 1,
                             "Melissa Da Costa": 0
                         }
                     }
@@ -3857,7 +3941,7 @@
                     {
                         "players": {
                             "Stacey Burns": 0,
-                            "Anne Laure Coudray": 1
+                            "Anne-Laure Coudray": 1
                         }
                     }
                 ],
@@ -3887,7 +3971,7 @@
         "players_score": {
             "Romeo Alonzo": 2,
             "Parker Castro": 2,
-            "Anne Laure Coudray": 2,
+            "Anne-Laure Coudray": 2,
             "Melissa Da Costa": 1,
             "Wanda Armstrong": 0.5,
             "Andrea Blop": 0.5,
@@ -3945,7 +4029,7 @@
                     "national chess ID": "mc99763"
                 },
                 "player2": {
-                    "firstname": "Anne Laure",
+                    "firstname": "Anne-Laure",
                     "lastname": "Coudray",
                     "birth": "01-02-1977",
                     "national chess ID": "al77510"
@@ -3987,7 +4071,7 @@
                     "national chess ID": "OR50619"
                 },
                 "player2": {
-                    "firstname": "Anne Laure",
+                    "firstname": "Anne-Laure",
                     "lastname": "Coudray",
                     "birth": "01-02-1977",
                     "national chess ID": "al77510"
@@ -4051,7 +4135,7 @@
             },
             {
                 "player1": {
-                    "firstname": "Anne Laure",
+                    "firstname": "Anne-Laure",
                     "lastname": "Coudray",
                     "birth": "01-02-1977",
                     "national chess ID": "al77510"
@@ -4093,7 +4177,7 @@
             },
             {
                 "player1": {
-                    "firstname": "Anne Laure",
+                    "firstname": "Anne-Laure",
                     "lastname": "Coudray",
                     "birth": "01-02-1977",
                     "national chess ID": "al77510"
@@ -4158,7 +4242,7 @@
                 "national chess ID": "CO35493"
             },
             {
-                "firstname": "Anne Laure",
+                "firstname": "Anne-Laure",
                 "lastname": "Coudray",
                 "birth": "01-02-1977",
                 "national chess ID": "al77510"
@@ -4849,42 +4933,5 @@
                 "national chess ID": "ZS45412"
             }
         ]
-    },
-    {
-        "name": "Aa",
-        "place": "Aa",
-        "date_start": "11-11-2111",
-        "date_end": "11-11-2111",
-        "director_note": "",
-        "rounds": [
-            {
-                "name": "Round 1",
-                "matches": [],
-                "start_time": null,
-                "end_time": null
-            },
-            {
-                "name": "Round 2",
-                "matches": [],
-                "start_time": null,
-                "end_time": null
-            },
-            {
-                "name": "Round 3",
-                "matches": [],
-                "start_time": null,
-                "end_time": null
-            },
-            {
-                "name": "Round 4",
-                "matches": [],
-                "start_time": null,
-                "end_time": null
-            }
-        ],
-        "current_round": 0,
-        "players_score": {},
-        "played_pairs": [],
-        "players_list": []
     }
 ]

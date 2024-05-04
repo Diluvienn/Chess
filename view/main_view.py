@@ -13,8 +13,5 @@ class MainView:
 
     @staticmethod
     def get_user_choice():
-        """
-        Demande à l'utilisateur de saisir
-        son choix et renvoie la valeur saisie.
-        """
+        """Prompt the user to enter their choice and return the input value."""
         return input("Entrez le numéro de votre choix: ")

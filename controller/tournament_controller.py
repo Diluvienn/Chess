@@ -1,6 +1,31 @@
+"""Module containing the TournamentController class and related functions.
+
+This module provides a controller class
+for managing tournament-related operations,
+such as displaying tournaments,
+showing tournament details, creating new tournaments,
+and playing tournaments.
+It also includes helper functions for calculating leaderboard,
+getting tournament details,
+and adding director notes to tournaments.
+
+Classes:
+    TournamentController:
+    A controller class for managing tournament-related operations.
+
+Functions:
+    get_tournament_name_by_index:
+    Get the name of the tournament corresponding to the given index.
+    calculate_leaderboard:
+    Calculate and display the leaderboard for a tournament.
+
+"""
+
 from datetime import datetime
 
-from utils.confirm_return_menu import confirm_return_to_previous_menu, confirm_stop_add_note
+from utils.confirm_return_menu import (confirm_return_to_previous_menu,
+                                       confirm_stop_add_note,
+                                       confirm_return_to_main_menu)
 from model.tournament import Tournament
 from model.round import Round
 from repository.tournament_repository import TournamentRepository
@@ -15,7 +40,17 @@ from view.tournament_view import (display_tournament_list,
 
 
 def get_tournament_name_by_index(tournaments, tournament_index):
-    """Get the name of the tournament corresponding to the given index."""
+    """Get the name of the tournament corresponding to the given index.
+
+    Args:
+        tournaments (list): List of tournaments.
+        tournament_index (int): Index of the tournament.
+
+    Returns:
+        str: Name of the tournament at the specified index,
+        or None if index is invalid.
+
+    """
     if 1 <= tournament_index <= len(tournaments):
         return tournaments[tournament_index - 1].name
     else:
@@ -23,7 +58,16 @@ def get_tournament_name_by_index(tournaments, tournament_index):
 
 
 def calculate_leaderboard(tournament, previous_scores):
-    # Créez une liste de tuples (joueur, score total)
+    """Calculate and display the leaderboard for a tournament.
+
+    Args:
+        tournament (Tournament):
+        The tournament object.
+        previous_scores (dict):
+        Dictionary containing previous scores of players.
+
+    """
+    # Crée une liste de tuples (joueur, score total)
     leaderboard = [(player,
                     player.calculate_total_score(tournament.rounds,
                                                  previous_scores))
@@ -34,8 +78,8 @@ def calculate_leaderboard(tournament, previous_scores):
     tournament.players_score = \
         {f"{player.firstname} {player.lastname}": score
          for player, score in sorted_leaderboard}
-    # Affichez le classement
-    # Vérifier si c'est le dernier round
+    # Affiche le classement
+    # Vérifie si c'est le dernier round
     if tournament.current_round == len(tournament.rounds) - 1:
         print("\nClassement final du tournoi :")
     else:
@@ -47,6 +91,7 @@ def calculate_leaderboard(tournament, previous_scores):
 
 
 class TournamentController:
+    """A controller class for managing tournament-related operations."""
     def __init__(self,
                  tournament_repository,
                  tournament_view,
@@ -59,12 +104,14 @@ class TournamentController:
         self.num_players = 0
 
     def show_tournaments(self):
+        """Display the list of tournaments."""
         tournaments = (
             self.tournament_repository.get_tournaments_by_alphabetical_order())
         display_tournament_list(tournaments)
         return tournaments
 
     def show_tournament_details(self):
+        """Display details of a selected tournament."""
         tournaments = self.show_tournaments()
         total_tournaments = len(tournaments)
         tournament_index = (
@@ -77,8 +124,14 @@ class TournamentController:
             return
 
     def create_new_tournament(self):
-        """Crée un nouveau tournoi avec les détails
-        fournis par l'utilisateur."""
+        """Create a new tournament with the details provided by the user.
+
+        Returns:
+            Tournament:
+            The newly created tournament object,
+            or None if the creation was canceled.
+
+        """
         tournament_details = (
             self.tournament_view.get_new_tournament_details())
 
@@ -119,7 +172,11 @@ class TournamentController:
         return new_tournament
 
     def add_players_to_tournament(self, tournament):
-        """Add players to the tournament."""
+        """Add players to the tournament.
+        Args:
+            tournament (Tournament):
+            The tournament to which players will be added.
+        """
         selected_players_index = []
         selected_players = []
         sorted_players_list = self.player_repository.display_players_by_index()
@@ -135,7 +192,8 @@ class TournamentController:
                 print(f"- {player.firstname} {player.lastname}")
             tournament.players_list = []
 
-        print("\n\033[92mInfo : Le nombre de joueur doit être de minimum 6 et pair.\033[0m")
+        print("\n\033[92mInfo : Le nombre de joueur "
+              "doit être de minimum 6 et pair.\033[0m")
 
         while True:
             display_add_player_menu(self.num_players)
@@ -192,22 +250,34 @@ class TournamentController:
                 else:
                     print("Le nombre d'inscrits doit être pair "
                           "et au moins égal à 6.")
+            elif user_choice == "q":
+                if confirm_return_to_main_menu():
+                    break
             else:
                 print("\033[91mVeuillez indiquer un choix valide.\033[0m")
 
     def resume_unstarted_tournament(self):
-        unstarted_tournaments = self.tournament_repository.find_unstarted_tournaments()
+        unstarted_tournaments = (
+            self.tournament_repository.find_unstarted_tournaments())
         if not unstarted_tournaments:
             self.tournament_view.display_no_unstarted_tournaments_message()
             return
-        self.tournament_view.display_unstarted_tournaments(unstarted_tournaments)
-        chosen_tournament = self.tournament_view.get_chosen_tournament(unstarted_tournaments)
-        self.tournament_view.display_chosen_tournament(chosen_tournament)
+        (self.tournament_view.
+         display_unstarted_tournaments(unstarted_tournaments))
+        chosen_tournament = (
+            self.tournament_view.get_chosen_tournament(unstarted_tournaments))
         if chosen_tournament:
+            self.tournament_view.display_chosen_tournament(chosen_tournament)
             tournament = Tournament.from_json(chosen_tournament)
             self.add_players_to_tournament(tournament)
+        else:
+            return
 
     def get_tournament_details(self, tournament_name):
+        """Display the details of the specified tournament.
+        Args:
+            tournament_name (str): The name of the tournament.
+        """
         tournament_details = \
             self.tournament_repository.get_tournament_details(tournament_name)
         if tournament_details:
@@ -216,24 +286,12 @@ class TournamentController:
         else:
             print("Le tournoi spécifié n'existe pas ou n'a pas été trouvé.")
 
-    # def add_director_notes_to_tournament(self):
-    #     notes = input("Ajouter des notes du directeur (y/n) ? : ")
-    #     if notes.lower() == "y":
-    #         notes_text = input("Entrez les notes du directeur : ")
-    #         if notes_text == "q":
-    #             if confirm_stop_add_note():
-    #                 return ""
-    #         else:
-    #             return notes_text
-    #     elif notes.lower() == "n":
-    #         return ""
-    #     elif notes.lower() == 'q':
-    #         if confirm_return_to_previous_menu():
-    #             return None
-    #     else:
-    #         print("Choix invalide.")
-    #         return self.add_director_notes_to_tournament()
     def add_director_notes_to_tournament(self):
+        """Add director's notes to the tournament.
+        Returns:
+            str or None: The director's notes entered by the user,
+            or None if canceled.
+        """
         while True:
             notes = input("Ajouter des notes du directeur (y/n) ? : ")
             if notes.lower() == "y":
@@ -252,13 +310,21 @@ class TournamentController:
                 print("Choix invalide.")
 
     def resume_tournament(self):
-        """Reprend un tournoi non terminé."""
+        """Resume an unfinished tournament."""
         chosen_tournament = self.tournament_repository.resume_tournament()
         if chosen_tournament:
             tournament = Tournament.from_json(chosen_tournament)
             self.play_tournament(tournament)
+        else:
+            return
 
     def play_tournament(self, tournament):
+        """Play the specified tournament.
+
+        Args:
+            tournament (Tournament): The tournament to be played.
+
+        """
         while tournament.current_round <= len(tournament.rounds):
             current_round = tournament.rounds[tournament.current_round]
 
@@ -308,3 +374,7 @@ class TournamentController:
                 break
 
             tournament.current_round += 1
+
+
+if __name__ == "__main__":
+    pass

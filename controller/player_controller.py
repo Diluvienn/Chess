@@ -1,14 +1,37 @@
+"""Module containing the PlayerController class.
+
+This module provides a controller class
+for managing player-related operations,
+such as displaying players,
+creating new players,
+and adding players to the list.
+
+Classes:
+    PlayerController:
+    A controller class for managing player-related operations.
+"""
+
 from model.player import Player
 from view.player_view import get_player_info_from_user
 
 
 class PlayerController:
+    """A controller class for managing player-related operations.
+
+    Attributes:
+        player_repository (PlayerRepository):
+        An instance of PlayerRepository for managing player data.
+        player_view (PlayerView):
+        An instance of PlayerView for displaying player-related views.
+
+    """
+
     def __init__(self, player_repository, player_view):
         self.player_repository = player_repository
         self.player_view = player_view
 
     def show_players(self):
-        """Affiche la liste des joueurs."""
+        """Display the list of players."""
         sorted_players = (
             self.player_repository.get_player_by_alphabetical_order())
         if not sorted_players:
@@ -36,7 +59,8 @@ class PlayerController:
                                 print("\nDétails du joueur :\n")
                                 print(f"Nom: {player_info['lastname']} "
                                       f"{player_info['firstname']}")
-                                print(f"Date de naissance: {player_info['birth']}")
+                                print(f"Date de naissance: "
+                                      f"{player_info['birth']}")
                                 print(f"Identifiant national d'échecs: "
                                       f"{player_info['national chess ID']}")
                             else:
@@ -49,11 +73,11 @@ class PlayerController:
                         return
 
     def create_new_player(self):
-        """Obtient les informations du joueur et crée un objet Player."""
+        """Obtain player information and create a Player object."""
         firstname, lastname, birth, national_chess_id = (
             get_player_info_from_user())
 
-        # Vérification si l'utilisateur a choisi de revenir au menu principal sans sauvegarder
+        # de retour au menu principal sans sauvegarder
         if firstname is None:
             return
 
@@ -65,7 +89,7 @@ class PlayerController:
         return new_player
 
     def add_player(self):
-        """Ajoute un nouveau joueur à la liste des joueurs."""
+        """Add a new player to the list of players."""
         player_info = self.player_view.create_player()
         if player_info is not None:
             new_player = Player(*player_info)

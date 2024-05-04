@@ -32,6 +32,7 @@ class Match:
                 f"{self.players[list(self.players.keys())[1]]}")
 
     def to_json(self):
+        """Convert the match data to JSON format."""
         # Convertir les clés en chaînes de caractères pour les noms des joueurs
         players_json = {f"{player.firstname} {player.lastname}": score
                         for player, score in self.players.items()}
@@ -45,6 +46,17 @@ class Match:
 
     @classmethod
     def from_json(cls, match_data, tournament):
+        """Create a Match instance from JSON data.
+
+        Args:
+            match_data (dict):
+            The JSON data representing the match.
+            tournament (Tournament):
+            The tournament instance to search for players.
+
+        Returns:
+            Match: A Match instance created from the JSON data.
+        """
         # Récupérer les données des joueurs depuis le JSON
         players_data = match_data["players"]
 
@@ -56,18 +68,15 @@ class Match:
                 player_firstname = player_name[:split_index]
                 player_lastname = player_name[split_index + 1:]
             else:
-                # S'il n'y a pas d'espace, le nom complet est le prénom
                 player_firstname = player_name
                 player_lastname = ""
             player = find_player(tournament, player_firstname, player_lastname)
-            # player = find_player(tournament, player_name)
             if player:
                 players[player] = score
             else:
                 print(f"Joueur introuvable dans "
                       f"la liste des joueurs du tournoi : {player_name}")
 
-        # Créer l'objet Match avec les joueurs (objets Player) et leurs scores
         match = cls(players)
         return match
 
@@ -75,7 +84,6 @@ class Match:
         # Afficher les détails du match
         player1 = list(self.players.keys())[0]
         player2 = list(self.players.keys())[1]
-        # Afficher les détails du match
         player1_name = (f"{list(self.players.keys())[0].firstname} "
                         f"{list(self.players.keys())[0].lastname}")
         player2_name = (f"{list(self.players.keys())[1].firstname} "
@@ -95,7 +103,7 @@ class Match:
         # Assigner le résultat du match à la variable d'instance self.result
         self.result = result
 
-        # Mettre à jour les scores des joueurs en fonction du résultat
+        # Mise à jour les scores des joueurs en fonction du résultat
         if result == "win":
             winning_player = player1
         elif result == "loss":

@@ -14,7 +14,10 @@ from view.main_view import MainView
 
 class MainController:
     def __init__(self):
-
+        """
+        Initialize MainController
+        with necessary instances and controllers.
+        """
         # Initialisation des instances nécessaires
         _tournament_repository = TournamentRepository()
         _player_repository = PlayerRepository()
@@ -44,6 +47,10 @@ class MainController:
                                  self._player_controller))
 
     def run(self):
+        """
+        Run the main program loop,
+        displaying main menu options and handling user input.
+        """
 
         while True:
             self._main_view.display_main_menu()

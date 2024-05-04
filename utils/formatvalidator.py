@@ -26,6 +26,15 @@ def validate_date_format(date_string: str) -> bool:
 
 
 def validate_national_chess_id_format(national_chess_id: str) -> bool:
+    """Validate the format of a national chess ID.
+
+    Args:
+        national_chess_id (str): A string representing a national chess ID.
+
+    Returns:
+        bool: True if the national chess ID has the correct format,
+        False otherwise.
+    """
     if len(national_chess_id) != 7:
         return False
     if not national_chess_id[:2].isalpha():

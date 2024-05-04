@@ -1,9 +1,14 @@
+"""
+This module defines functions and a class for managing user input
+and displaying tournament information.
+"""
+
 from utils.formatvalidator import validate_date_format
 from utils.confirm_return_menu import confirm_return_to_main_menu
 
 
 def display_tournament_list(tournaments):
-    """Affiche la liste des tournois."""
+    """Display the list of tournaments."""
     formatted_output = tournaments
 
     print("\nListe des tournois:")
@@ -31,7 +36,7 @@ def get_tournament_index_from_user(total_tournaments):
 
 
 def prompt_add_players():
-    """Demande à l'utilisateur s'il souhaite ajouter des joueurs au tournoi."""
+    """Ask the user if they want to add players to the tournament."""
     while True:
         add_players_choice = (
             input("Souhaitez-vous ajouter des joueurs au tournoi ? (y/n) : "))
@@ -44,7 +49,7 @@ def prompt_add_players():
 
 
 def prompt_play_tournament():
-    """Demande à l'utilisateur s'il souhaite lancer le tournoi."""
+    """Ask the user if they want to start the tournament."""
     while True:
         play_tournament_choice = (
             input("Souhaitez-vous lancer le tournoi ? (y/n) : "))
@@ -57,10 +62,12 @@ def prompt_play_tournament():
 
 
 def get_user_choice():
+    print("\033[92mRetour au menu principal sans sauvegarde: 'q'\033[0m")
     return input("Votre choix : ")
 
 
 def display_add_player_menu(num_players):
+    """Display the menu for adding players to the tournament."""
     if num_players >= 6 and num_players % 2 == 0:
         print("\nSouhaitez-vous ajouter un joueur existant (1), "
               "créer un nouveau joueur (2) "
@@ -71,6 +78,7 @@ def display_add_player_menu(num_players):
 
 
 def ask_to_play_next_round():
+    """Ask the user if they want to play the next round."""
     play_next_round = input("Voulez-vous jouer le round suivant ? (y/n): ")
     while play_next_round not in ["y", "n"]:
         print("\033[91mVeuillez effectuer un choix valide.\033[0m")
@@ -85,6 +93,7 @@ class TournamentView:
 
     @staticmethod
     def display_tournament_details(tournament_details):
+        """Display the details of a tournament."""
         if tournament_details:
             print("\nDétails du tournoi:")
             print(f"Nom: {tournament_details['name']}")
@@ -116,12 +125,11 @@ class TournamentView:
 
     @staticmethod
     def display_message(message):
-        """Affiche un message spécifique."""
+        """Display a specific message."""
         print(message)
 
     def get_new_tournament_details(self):
-        """Demande à l'utilisateur de saisir les détails
-        pour créer un nouveau tournoi."""
+        """Ask the user to enter details to create a new tournament."""
         name = None
         place = None
         date_start = None
@@ -130,7 +138,8 @@ class TournamentView:
         rounds = None
 
         while True:
-            print("\n\033[92mRetour au menu principal sans sauvegarde : 'q'\033[0m")
+            print("\n\033[92mRetour au menu principal "
+                  "sans sauvegarde : 'q'\033[0m")
             print("\nCréation d'un nouveau tournoi:")
             choice = input("Nom du tournoi: ").title()
 
@@ -227,23 +236,43 @@ class TournamentView:
             return name, place, date_start, date_end, director_note, rounds
 
     def display_no_unstarted_tournaments_message(self):
-        """Affiche un message indiquant qu'aucun tournoi non débuté n'a été trouvé."""
+        """Display a message indicating
+        that no unstarted tournaments were found."""
         print("Aucun tournoi non débuté trouvé.")
 
     def display_unstarted_tournaments(self, unstarted_tournaments):
-        """Affiche la liste des tournois non débutés."""
+        """Display the list of unstarted tournaments."""
         print("\nTournois non débutés :")
         for idx, tournament in enumerate(unstarted_tournaments, 1):
             print(f"{idx}. {tournament['name']} à {tournament['place']}")
 
     def get_chosen_tournament(self, unstarted_tournaments):
-        """Demande à l'utilisateur de choisir un tournoi."""
-        choice = int(input("Choisissez le numéro du tournoi dont vous souhaitez renseigner les joueurs : "))
-        return unstarted_tournaments[choice - 1]
+        """Ask the user to choose a tournament."""
+        print("\n\033[92mRetour au menu principal: 'q'\033[0m")
+        while True:
+            choice = (input("Choisissez le numéro du tournoi "
+                            "dont vous souhaitez renseigner les joueurs : "))
+            if choice == "q":
+                if confirm_return_to_main_menu():
+                    return None
+                else:
+                    continue
+            else:
+                try:
+                    choice = int(choice)
+                    if 1 <= choice <= len(unstarted_tournaments):
+                        return unstarted_tournaments[choice - 1]
+                    else:
+                        print("\033[91mIndex invalide. "
+                              "Veuillez choisir un numéro entre 1 et",
+                              len(unstarted_tournaments), "\033[0m")
+                except ValueError:
+                    print("\033[91mVeuillez entrer un numéro valide.\033[0m")
 
     def display_chosen_tournament(self, chosen_tournament):
-        """Affiche le tournoi choisi par l'utilisateur."""
-        print(f"\nVous avez choisi le tournoi {chosen_tournament['name']} à {chosen_tournament['place']}")
+        """Display the tournament chosen by the user."""
+        print(f"\nVous avez choisi le tournoi {chosen_tournament['name']} "
+              f"à {chosen_tournament['place']}")
 
 
 if __name__ == "__main__":

@@ -4,6 +4,7 @@ import json
 from unidecode import unidecode
 
 from model.tournament import Tournament
+from utils.confirm_return_menu import confirm_return_to_main_menu
 
 
 class TournamentRepository:
@@ -103,6 +104,16 @@ class TournamentRepository:
             json.dump(tournaments, file, indent=4)
 
     def find_unfinished_tournaments(self):
+        """Find tournaments that are not yet finished.
+
+        Returns:
+            List[dict]: A list of dictionaries containing information about
+            tournaments that are not yet finished.
+
+        This method retrieves all tournaments from the repository,
+        identifies the ones that have not reached their final round,
+        and returns their details.
+        """
         tournaments = self.load_tournaments()
         unfinished_tournaments = []
 
@@ -116,6 +127,18 @@ class TournamentRepository:
         return unfinished_tournaments
 
     def resume_tournament(self):
+        """Resume a tournament that is not yet finished.
+
+        Returns:
+            dict or None: Details of the chosen tournament to resume,
+            or None if no unfinished tournament is found.
+
+        This method allows the user to choose a tournament from the list
+        of unfinished tournaments to resume. It prompts the user to select
+        a tournament by number,
+        provides options for returning to the main menu,
+        and handles input validation.
+        """
         unfinished_tournaments = self.find_unfinished_tournaments()
         if not unfinished_tournaments:
             print("Aucun tournoi non terminé trouvé.")
@@ -123,14 +146,41 @@ class TournamentRepository:
         print("\nTournois non terminés :")
         for idx, tournament in enumerate(unfinished_tournaments, 1):
             print(f"{idx}. {tournament['name']} à {tournament['place']}")
-        choice = int(input("Choisissez le numéro du tournoi à reprendre : "))
-        chosen_tournament = unfinished_tournaments[choice - 1]
-        print(f"\nVous avez choisi de reprendre "
-              f"le tournoi {chosen_tournament['name']} "
-              f"à {chosen_tournament['place']}")
-        return chosen_tournament
+        print("\n\033[92mRetour au menu principal: 'q'\033[0m")
+        while True:
+            choice = input("Choisissez le numéro du tournoi à reprendre : ")
+            if choice == "q":
+                if confirm_return_to_main_menu():
+                    return None
+                else:
+                    continue
+            else:
+                try:
+                    choice = int(choice)
+                    if 1 <= choice <= len(unfinished_tournaments):
+                        chosen_tournament = unfinished_tournaments[choice - 1]
+                        print(f"\nVous avez choisi de reprendre "
+                              f"le tournoi {chosen_tournament['name']} "
+                              f"à {chosen_tournament['place']}")
+                        return chosen_tournament
+                    else:
+                        print("\033[91mIndex invalide. "
+                              "Veuillez choisir un numéro entre 1 et",
+                              len(unfinished_tournaments),
+                              "\033[0m")
+                except ValueError:
+                    print("\033[91mVeuillez entrer un numéro valide.\033[0m")
 
     def find_unstarted_tournaments(self):
+        """Find tournaments that have not yet started.
+
+        Returns:
+            List[dict]: A list of dictionaries containing information about
+            tournaments that have not yet started.
+
+        This method retrieves all tournaments from the repository
+        and identifies the ones that have not started yet.
+        """
         tournaments = self.load_tournaments()
         unstarted_tournaments = []
 
@@ -140,6 +190,21 @@ class TournamentRepository:
         return unstarted_tournaments
 
     def get_tournament_details(self, tournament_name):
+        """Get details of a specific tournament.
+
+        Args:
+            tournament_name (str):
+            The name of the tournament to retrieve details for.
+
+        Returns:
+            dict or None: Details of the requested tournament,
+            or None if the tournament is not found.
+
+        This method searches for a tournament by name in the repository
+        and returns its details, including name, place, start and end dates,
+        director's note, current round, player scores, and rounds details.
+        If the tournament is not found, it returns None.
+        """
         for tournament_data in self.load_tournaments():
             tournament_name_normalized = (
                 unidecode(tournament_data['name'].title()))
@@ -164,8 +229,7 @@ class TournamentRepository:
                     tournament_details["tournament_status"] = \
                         f"Round actuel : {current_round} sur {rounds_count}"
 
-                # Créer une nouvelle liste
-                # pour stocker les détails des rounds joués
+                # stocker les détails des rounds joués
                 played_rounds_details = []
 
                 # Ajout des détails des rounds joués

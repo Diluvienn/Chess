@@ -14,7 +14,8 @@ Classes:
 
 
 class Player:
-    """Player"""
+    """Represents a chess player with attributes
+    including first name, last name, date of birth, and national chess ID."""
 
     def __init__(self, firstname: str,
                  lastname: str,
@@ -32,19 +33,6 @@ class Player:
                 f"(Date de naissance:"
                 f" {self.birth}, "
                 f"Identifiant national: {self.national_chess_id})")
-
-    def fullname(self):
-        """Retourne le nom complet du joueur."""
-        return f"{self.firstname} {self.lastname}"
-
-    def calculate_total_score(self, rounds, previous_scores=None):
-        total_score = self.score
-
-        for round in rounds:
-            for match in round.matches:
-                if self in match.players:
-                    total_score += match.players[self]
-        return total_score
 
     def to_json(self):
         """Converts player data to a JSON-compatible dictionary.
@@ -65,12 +53,13 @@ class Player:
     @classmethod
     def from_json(cls, json_data):
         """Crée un objet Player à partir des données JSON.
-
         Args:
-            json_data (dict): Les données JSON représentant le joueur.
+            json_data (dict):
+            Les données JSON représentant le joueur.
 
         Returns:
-            Player: L'objet Player créé à partir des données JSON.
+            Player:
+            L'objet Player créé à partir des données JSON.
         """
         # Extraire les données du JSON
         firstname = json_data['firstname']
