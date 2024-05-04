@@ -13,3 +13,7 @@ def find_player(tournament, player_firstname, player_lastname):
         if p.firstname == player_firstname and p.lastname == player_lastname:
             return p
     return None
+
+
+if __name__ == "__main__":
+    pass

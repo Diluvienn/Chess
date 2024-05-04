@@ -93,3 +93,7 @@ class PlayerController:
         if player_info is not None:
             new_player = Player(*player_info)
             self.player_repository.add_player(new_player)
+
+
+if __name__ == "__main__":
+    pass
