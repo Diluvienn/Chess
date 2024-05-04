@@ -46,6 +46,15 @@ Dans le terminal :
 
     python main.py
 
+Générer un nouveau fichier flake8-html
+
+    Pour générer un nouveau fichier flake8-html  :
+        Assurez-vous que flake8 est installé
+        puis executez :
+        flake8 --format=html --htmldir=flake8_report
+
+
+
 Arborescence :
 
     Chess/
